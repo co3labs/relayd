@@ -36,6 +36,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
   const [web3, setWeb3] = useState<Web3>();
   const [unsupportedNet, setUnsupportedNet] = useState<boolean>(false);
   const [showRechargeModal, setShowRechargeModal] = useState<boolean>(false);
+  const [showSignupModal, setShowSignupModal] = useState<boolean>(false);
 
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
@@ -193,6 +194,8 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         web3,
         showRechargeModal,
         setShowRechargeModal,
+        showSignupModal,
+        setShowSignupModal,
       }}
     >
       <>{children}</>

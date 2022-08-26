@@ -1,4 +1,3 @@
-
 import { Dispatch, SetStateAction } from 'react';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
@@ -15,6 +14,8 @@ export interface globalStates {
   chainId?: supportedChains;
   provider?: Web3Modal;
   web3?: Web3;
-  showRechargeModal:boolean
-  setShowRechargeModal:Dispatch<SetStateAction<boolean>>
+  showRechargeModal: boolean;
+  setShowRechargeModal: Dispatch<SetStateAction<boolean>>;
+  showSignupModal: boolean;
+  setShowSignupModal: Dispatch<SetStateAction<boolean>>;
 }
