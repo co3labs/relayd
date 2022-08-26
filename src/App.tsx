@@ -1,6 +1,6 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import Home from './Components/Home';
+import AccountShell from './Components/AccountShell';
 import Dashboard from './Components/Dashboard';
 import Hero from './Components/Hero';
 import NotFound from './Components/NotFound';
@@ -10,7 +10,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="" element={<Hero />} />
-        <Route path="/account/*" element={<Home />} />
+        <Route path="/account/*" element={<AccountShell />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} />

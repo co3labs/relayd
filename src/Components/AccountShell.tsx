@@ -17,7 +17,7 @@ import ModalToggles from './ModalToggles';
 import { classNames } from '../context/GlobalState';
 import ContractDeploy from './ContractDeploy';
 import ContractWrite from './ContractWrite';
-export default function Home() {
+export default function AccountShell() {
   /* This example requires Tailwind CSS v2.0+ */
 
   const navigation = [
