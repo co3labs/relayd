@@ -35,6 +35,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
   const [provider, setProvider] = useState<Web3Modal>();
   const [web3, setWeb3] = useState<Web3>();
   const [unsupportedNet, setUnsupportedNet] = useState<boolean>(false);
+  const [showRechargeModal, setShowRechargeModal] = useState<boolean>(false);
 
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
@@ -131,7 +132,6 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
     });
   }
 
-
   const switchNetwork = async () => {
     if (!process.env.REACT_APP_CHAIN_ID) return;
     if (chainId !== Number(process.env.REACT_APP_CHAIN_ID)) {
@@ -191,6 +191,8 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         chainId,
         provider,
         web3,
+        showRechargeModal,
+        setShowRechargeModal,
       }}
     >
       <>{children}</>

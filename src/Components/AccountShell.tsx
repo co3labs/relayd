@@ -1,4 +1,4 @@
-import { Children, Fragment, PropsWithChildren, useState } from 'react';
+import { Children, Fragment, PropsWithChildren, useContext, useState } from 'react';
 import { Dialog, Transition, Disclosure } from '@headlessui/react';
 import {
   CodeBracketIcon,
@@ -14,12 +14,12 @@ import Dashboard from './Dashboard';
 import Account from './Account';
 import ProfileData from './ProfileData';
 import ModalToggles from './ModalToggles';
-import { classNames } from '../context/GlobalState';
+import { classNames, GlobalContext } from '../context/GlobalState';
 import ContractDeploy from './ContractDeploy';
 import ContractWrite from './ContractWrite';
 export default function AccountShell() {
-  /* This example requires Tailwind CSS v2.0+ */
 
+  
   const navigation = [
     { name: 'Account', path: '', icon: UsersIcon, current: false, element: <Account /> },
     { name: 'Dashboard', path: 'dashboard', icon: HomeIcon, current: true, element: <Dashboard /> },
