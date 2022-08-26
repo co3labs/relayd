@@ -2,7 +2,7 @@ import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 
 export default function ContractForm({ submitText, onSubmit }: { submitText: string; onSubmit: Function }) {
   return (
-    <div className=" max-w-2xl p-4 bg-gray-900 bg-opacity-40 rounded-md lg:px-12 sm:px-6 md:px-8 mt-6">
+    <div className=" max-w-2xl p-4 bg-gray-900 bg-opacity-60 rounded-md lg:px-12 sm:px-6 md:px-8 mt-6">
       <form
         action=""
         onSubmit={(e) => {

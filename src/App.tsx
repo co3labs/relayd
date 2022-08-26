@@ -1,7 +1,6 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import AccountShell from './Components/AccountShell';
-import Dashboard from './Components/Dashboard';
+import Shell from './Components/Shell';
 import Hero from './Components/Hero';
 import NotFound from './Components/NotFound';
 import Recharge from './Components/Recharge';
@@ -12,7 +11,7 @@ export default function App() {
       <Recharge/>
       <Routes>
         <Route path="" element={<Hero />} />
-        <Route path="/account/*" element={<AccountShell />} />
+        <Route path="/account/*" element={<Shell />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ReactQueryDevtools initialIsOpen={false} />

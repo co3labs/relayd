@@ -8,21 +8,25 @@ import {
   XMarkIcon,
   ChevronDownIcon,
   ArrowLeftOnRectangleIcon,
+  CurrencyDollarIcon,
+  LightBulbIcon,
 } from '@heroicons/react/24/outline';
 import { Link, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
-import Account from './Account';
+import Pools from './Pools';
 import ProfileData from './ProfileData';
 import ModalToggles from './ModalToggles';
-import { classNames, GlobalContext } from '../context/GlobalState';
+import { classNames } from '../context/GlobalState';
 import ContractDeploy from './ContractDeploy';
 import ContractWrite from './ContractWrite';
-export default function AccountShell() {
+import Strategy from './Strategy';
+export default function Shell() {
 
   
   const navigation = [
-    { name: 'Account', path: '', icon: UsersIcon, current: false, element: <Account /> },
     { name: 'Dashboard', path: 'dashboard', icon: HomeIcon, current: true, element: <Dashboard /> },
+    { name: 'Pools', path: 'pools', icon: CurrencyDollarIcon, current: false, element: <Pools /> },
+    { name: 'Strategy', path: 'strategy', icon: LightBulbIcon, current: false, element: <Strategy /> },
     {
       name: 'Send Transaction',
       path: 'contract/*',
