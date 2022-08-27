@@ -9,10 +9,10 @@ import Signup from './Components/Signup';
 export default function App() {
   return (
     <Router>
-      <Recharge/>
-      <Signup/>
+      <Recharge />
       <Routes>
         <Route path="" element={<Hero />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/account/*" element={<Shell />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

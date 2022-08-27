@@ -4,20 +4,10 @@ import { GlobalContext } from '../context/GlobalState';
 import FocusModalContainer from './FocusModalContainer';
 
 export default function Signup() {
-  const { showSignupModal, setShowSignupModal } = useContext(GlobalContext);
-  return showSignupModal ? (
+  return (
     <FocusModalContainer>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-gray-800 border border-gray-400 py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <div className="w-full flex justify-end">
-            <button
-              onClick={() => {
-                setShowSignupModal(false);
-              }}
-            >
-              <XMarkIcon className="w-4 h-4 text-gray-400 hover:text-white" />
-            </button>
-          </div>
           <form className="space-y-6" action="#" method="POST">
             <div className="sm:col-span-6">
               <label htmlFor="cover-photo" className="block text-sm font-medium text-gray-700">
@@ -103,14 +93,12 @@ export default function Signup() {
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
               >
-                Sign in
+                Sign up
               </button>
             </div>
           </form>
         </div>
       </div>
     </FocusModalContainer>
-  ) : (
-    <></>
   );
 }
