@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { IPoolItem } from '../@types/types';
 import { classNames, getShortId } from '../context/GlobalState';
 
-export default function PoolItem({ pool }: { pool: IPoolItem }) {
+export default function AllPoolListItem({ pool }: { pool: IPoolItem }) {
   const [enabled, setEnabled] = useState(true);
+
   return (
-    <li className='w-full' key={pool.name}>
+    <li className="w-full" key={pool.name}>
       <a href="#" className="block hover:bg-gray-50">
         <div className="px-4 py-4 sm:px-6">
           <div className="flex items-center justify-between">
@@ -53,4 +54,3 @@ export default function PoolItem({ pool }: { pool: IPoolItem }) {
     </li>
   );
 }
-

@@ -4,7 +4,6 @@ import { Bars3Icon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/outl
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../context/GlobalState';
 export default function Hero() {
-  const { setShowSignupModal } = useContext(GlobalContext);
   const navigation = [
     { name: 'Features', href: '#' },
     { name: 'Company', href: '#' },

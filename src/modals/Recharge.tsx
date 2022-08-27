@@ -5,7 +5,7 @@ import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 import FocusModalContainer from './FocusModalContainer';
 
 export default function Recharge() {
-  const { showRechargeModal, setShowRechargeModal } = useContext(GlobalContext);
+  const { modalOpen, setModalOpen } = useContext(GlobalContext);
   const [selectedAddress, setSelectedAddress] = useState('');
   const tabs = ['Fiat', 'Crypto'];
   const pools = [
@@ -22,7 +22,7 @@ export default function Recharge() {
     e.preventDefault();
   }
 
-  return showRechargeModal ? (
+  return modalOpen === "withdrawal" ? (
     // <Transition
     // show={showRechargeModal}
     // enter="transition duration-100 ease-out"
@@ -37,7 +37,7 @@ export default function Recharge() {
         <div className="w-full flex justify-end">
           <button
             onClick={() => {
-              setShowRechargeModal(false);
+              setModalOpen(null);
             }}
           >
             <XMarkIcon className="w-4 h-4 text-gray-400 hover:text-white" />

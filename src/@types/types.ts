@@ -7,6 +7,7 @@ export type supportedChains = 2828 | 4;
 export type ITxProgress = 'loading' | 'failed' | 'success' | '';
 
 export type VoidFunciton = () => void;
+export type ModalOpen = 'withdrawal' | 'recharge' | null;
 
 export interface IPoolItem {
   group: string;
@@ -22,8 +23,7 @@ export interface globalStates {
   chainId?: supportedChains;
   provider?: Web3Modal;
   web3?: Web3;
-  showRechargeModal: boolean;
-  setShowRechargeModal: Dispatch<SetStateAction<boolean>>;
-  showSignupModal: boolean;
-  setShowSignupModal: Dispatch<SetStateAction<boolean>>;
+  modalOpen: ModalOpen;
+  setModalOpen: Dispatch<SetStateAction<ModalOpen>>;
+
 }

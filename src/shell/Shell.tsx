@@ -12,14 +12,14 @@ import {
   LightBulbIcon,
 } from '@heroicons/react/24/outline';
 import { Link, Route, Routes } from 'react-router-dom';
-import Dashboard from './Dashboard';
-import Pools from './Pools';
+import Dashboard from '../dashboard/Dashboard';
+import Pools from '../pools/Pools';
 import ProfileData from './ProfileData';
 import ModalToggles from './ModalToggles';
 import { classNames } from '../context/GlobalState';
-import ContractDeploy from './ContractDeploy';
-import ContractWrite from './ContractWrite';
-import Strategies from './Strategies';
+import ContractDeploy from '../contract-tools/ContractDeploy';
+import ContractWrite from '../contract-tools/ContractWrite';
+import Strategies from '../strategies/Strategies';
 export default function Shell() {
 
   
@@ -104,7 +104,7 @@ export default function Shell() {
   );
 
   return (
-    <div className="h-screen flex overflow-hidden bg-gray-800">
+    <div className="h-screen flex overflow-hidden bg-gray-100 ">
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 flex z-40 md:hidden" onClose={setSidebarOpen}>
           <Transition.Child
@@ -127,7 +127,7 @@ export default function Shell() {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <div className="relative flex-1 flex flex-col max-w-xs w-full bg-gray-900">
+            <div className="relative flex-1 flex flex-col max-w-xs w-full bg-gray-800">
               <Transition.Child
                 as={Fragment}
                 enter="ease-in-out duration-300"
@@ -163,7 +163,7 @@ export default function Shell() {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden bg-gray-900 md:flex md:flex-shrink-0">
+      <div className="hidden bg-zinc-900 md:flex md:flex-shrink-0">
         <div className="flex flex-col w-64">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex-1 flex flex-col min-h-0">
@@ -203,7 +203,7 @@ export default function Shell() {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none">
+        <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none max-h-screen">
           <Routes>
             {navigation.map((item) =>
               item.children ? (

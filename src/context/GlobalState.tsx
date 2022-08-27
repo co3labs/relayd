@@ -2,7 +2,7 @@ import { createContext, PropsWithChildren, useEffect, useRef, useState } from 'r
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import { globalStates, supportedChains } from '../@types/types';
+import { globalStates, ModalOpen, supportedChains } from '../@types/types';
 export const blockExplorer = 'https://explorer.execution.l16.lukso.network/address/';
 
 export const INITIAL_GUARDIAN_LIST = { 0: { name: '', address: '' } };
@@ -35,8 +35,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
   const [provider, setProvider] = useState<Web3Modal>();
   const [web3, setWeb3] = useState<Web3>();
   const [unsupportedNet, setUnsupportedNet] = useState<boolean>(false);
-  const [showRechargeModal, setShowRechargeModal] = useState<boolean>(false);
-  const [showSignupModal, setShowSignupModal] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<ModalOpen>(null);
 
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
@@ -192,10 +191,8 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         chainId,
         provider,
         web3,
-        showRechargeModal,
-        setShowRechargeModal,
-        showSignupModal,
-        setShowSignupModal,
+        modalOpen,
+        setModalOpen,
       }}
     >
       <>{children}</>

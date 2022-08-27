@@ -1,7 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useContext } from 'react';
 import { GlobalContext } from '../context/GlobalState';
-import FocusModalContainer from './FocusModalContainer';
+import FocusModalContainer from '../modals/FocusModalContainer';
 
 export default function Signup() {
   return (
