@@ -21,7 +21,7 @@ import { classNames } from '../context/GlobalState';
 import ContractDeploy from '../contract-tools/ContractDeploy';
 import ContractWrite from '../contract-tools/ContractWrite';
 import Strategies from '../strategies/Strategies';
-import PoolPage from '../pools/PoolPage';
+import Pool from '../pools/Pool';
 export default function Shell() {
   interface INavigationItem {
     name: string;
@@ -38,7 +38,7 @@ export default function Shell() {
     {
       name: 'Pools',
       path: 'pools',
-      subpaths: [{ subpath: '/:pool_address', subElement: PoolPage }],
+      subpaths: [{ subpath: '/:pool_address', subElement: Pool }],
       icon: CurrencyDollarIcon,
       current: false,
       element: Pools,

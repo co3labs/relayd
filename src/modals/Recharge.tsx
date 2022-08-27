@@ -22,7 +22,7 @@ export default function Recharge() {
     e.preventDefault();
   }
 
-  return modalOpen === "withdrawal" ? (
+  return modalOpen === "recharge" ? (
     // <Transition
     // show={showRechargeModal}
     // enter="transition duration-100 ease-out"

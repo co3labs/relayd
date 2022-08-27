@@ -27,4 +27,6 @@ export interface globalStates {
   setModalOpen: Dispatch<SetStateAction<ModalOpen>>;
   userPools: IPoolItem[];
   allPools: IPoolItem[];
+  currentPool: IPoolItem | undefined;
+  setCurrentPool: Dispatch<SetStateAction<IPoolItem | undefined>>;
 }

@@ -4,8 +4,6 @@ import { IPoolItem } from '../@types/types';
 import { classNames, getShortId } from '../context/GlobalState';
 
 export default function AllPoolListItem({ pool }: { pool: IPoolItem }) {
-  const [enabled, setEnabled] = useState(true);
-
   return (
     <li className="w-full" key={pool.name}>
       <a href="#" className="block hover:bg-gray-50">

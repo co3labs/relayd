@@ -70,6 +70,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
 
   const [userPools, setUserPools] = useState<IPoolItem[]>(pools);
   const [allPools, setAllPools] = useState<IPoolItem[]>([...pools, ...pools, ...pools, ...pools]);
+  const [currentPool, setCurrentPool] = useState<IPoolItem>();
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
   // intitialize web3modal to use to connect to provider
@@ -228,6 +229,8 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         setModalOpen,
         userPools,
         allPools,
+        currentPool,
+        setCurrentPool,
       }}
     >
       <>{children}</>
