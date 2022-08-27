@@ -42,7 +42,7 @@ export default function CreatePoolForm() {
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="space-y-8 divide-y divide-gray-200 my-6"
+        className="space-y-8 divide-y divide-gray-200 my-6 bg-gray-50 p-4 rounded-lg max-w-4xl mx-auto"
       >
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div>
@@ -198,7 +198,7 @@ export default function CreatePoolForm() {
         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
           <LableWDesc
             name="beneficiaries"
-            description="Addresses defined here determine who will benefit from incentives. Omitting will bean any account can benefit."
+            description="Addresses defined here determine who will benefit from incentives. Omitting will allow any account to benefit."
           />
 
           <div className="mt-1 sm:mt-0 sm:col-span-2 max-w-md">

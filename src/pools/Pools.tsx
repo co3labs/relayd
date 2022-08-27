@@ -1,48 +1,39 @@
-import { Disclosure, Listbox, Tab, Transition } from '@headlessui/react';
-import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
-import {
-  ArrowTopRightOnSquareIcon,
-  ArrowUpOnSquareIcon,
-  CheckIcon,
-  ExclamationCircleIcon,
-} from '@heroicons/react/24/outline';
-import { Fragment, useState } from 'react';
+import { Tab } from '@headlessui/react';
+import { Fragment } from 'react';
 import { IPoolItem } from '../@types/types';
-import { classNames, getShortId } from '../context/GlobalState';
+import { classNames } from '../context/GlobalState';
 import AllPoolList from './AllPoolList';
 import CreatePoolForm from './CreatePoolForm';
 import UserPoolList from './UserPoolList';
-import UserPoolListItem from './UserPoolListItem';
 
 export default function Pools() {
-  const [beneficiaries, setBeneficiaries] = useState([]);
   const existingPools: IPoolItem[] = [
     {
       group: 'DataX',
       name: '1K promotion',
       description: 'Swaps for over 1K on DataX',
-      address: '0x0',
+      address: '0x01',
       balance: '800 LYXt',
     },
     {
       group: 'Relayd',
       name: '1st contract deployment',
       description: 'First Contract deployment using Relayd',
-      address: '0x0',
+      address: '0x02',
       balance: '800 LYXt',
     },
     {
       group: 'DataX',
       name: 'lucky winner promotion',
       description: '1 in 10 transactions',
-      address: '0x0',
+      address: '0x03',
       balance: '800 LYXt',
     },
     {
       group: 'Guardians',
       name: 'First five vaults',
       description: 'First 5 vaults on Guardians',
-      address: '0x0',
+      address: '0x04',
       balance: '800 LYXt',
     },
   ];
