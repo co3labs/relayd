@@ -42,7 +42,7 @@ export default function CreatePoolForm() {
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="space-y-8 divide-y divide-gray-200 my-6 bg-gray-50 p-4 rounded-lg max-w-4xl mx-auto"
+        className="space-y-8 divide-y divide-gray-200 my-6 bg-gray-50 p-4 rounded-lg max-w-5xl mx-auto"
       >
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div>
@@ -72,26 +72,26 @@ export default function CreatePoolForm() {
                 </div>
               </div>
 
-              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+              <div className="lg:grid lg:grid-cols-3 lg:gap-4 lg:items-start lg:border-t lg:border-gray-200 lg:pt-5">
                 <LableWDesc
-                  name="contract"
-                  description="This is the contract the new pool will be associated with."
+                  name="target"
+                  description="The target is the contract the pool is associated with. Transactions facilitated by the target are incentivized"
                   required={true}
                 />
                 <div className="mt-1 sm:mt-0 sm:col-span-2 max-w-md rounded-md shadow-sm ">
                   {' '}
                   <input
                     type="text"
-                    name="contract"
+                    name="target"
                     placeholder="0x0"
-                    id="contract"
+                    id="target"
                     required
                     className="shadow-sm placeholder:text-gray-300  focus:ring-gray-500 focus:border-gray-700 block w-full sm:text-sm border-gray-300 rounded-md"
                   />
                 </div>
               </div>
 
-              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+              <div className="lg:grid lg:grid-cols-3 lg:gap-4 lg:items-start lg:border-t lg:border-gray-200 lg:pt-5">
                 <LableWDesc
                   name="strategy"
                   description="This is the strategy defining incentivized transactions. The strategy must conform with the contract ABI."
@@ -101,7 +101,7 @@ export default function CreatePoolForm() {
                     id="strategy"
                     name="strategy"
                     className={classNames(
-                      'shadow-sm text-gray-800 focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border-gray-300 rounded-md'
+                      'shadow-sm text-gray-800 focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border-gray-300 rounded-md '
                     )}
                   >
                     {strategies.map((strategy) => (
@@ -155,7 +155,7 @@ export default function CreatePoolForm() {
             Tags
           </label>
 
-          <div className="flex items-center shadow-sm bg-white focus:ring-gray-500 border focus:border-gray-500 w-full sm:text-sm border-gray-300 rounded-md">
+          <div className="flex items-center shadow-sm bg-white focus:ring-gray-500 border focus:border-gray-500 w-full sm:text-sm border-gray-300 rounded-md mt-1 sm:mt-0 sm:col-span-2 max-w-sm xl:col-span-1">
             <div className="flex items-center mx-2">
               {formInfo.tags.map((tag, index) => (
                 <div className="flex item-center rounded-sm p-1 bg-blue-200">
