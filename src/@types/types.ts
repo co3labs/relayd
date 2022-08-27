@@ -25,5 +25,6 @@ export interface globalStates {
   web3?: Web3;
   modalOpen: ModalOpen;
   setModalOpen: Dispatch<SetStateAction<ModalOpen>>;
-
+  userPools: IPoolItem[];
+  allPools: IPoolItem[];
 }

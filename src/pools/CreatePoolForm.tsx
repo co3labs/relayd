@@ -178,6 +178,7 @@ export default function CreatePoolForm() {
               className="border-none focus:border-none"
               tabIndex={-1}
               onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                if (formInfo.tags.length === 5) return;
                 console.log('Key down', e.key);
                 const key = e.key;
                 if (key === 'Enter') {

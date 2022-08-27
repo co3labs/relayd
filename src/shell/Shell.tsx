@@ -1,4 +1,4 @@
-import { Children, Fragment, PropsWithChildren, useContext, useState } from 'react';
+import { Children, Fragment, PropsWithChildren, SVGProps, useContext, useState } from 'react';
 import { Dialog, Transition, Disclosure } from '@headlessui/react';
 import {
   CodeBracketIcon,
@@ -10,8 +10,9 @@ import {
   ArrowLeftOnRectangleIcon,
   CurrencyDollarIcon,
   LightBulbIcon,
+  HandRaisedIcon,
 } from '@heroicons/react/24/outline';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, matchPath, Route, Routes } from 'react-router-dom';
 import Dashboard from '../dashboard/Dashboard';
 import Pools from '../pools/Pools';
 import ProfileData from './ProfileData';
@@ -20,21 +21,37 @@ import { classNames } from '../context/GlobalState';
 import ContractDeploy from '../contract-tools/ContractDeploy';
 import ContractWrite from '../contract-tools/ContractWrite';
 import Strategies from '../strategies/Strategies';
+import PoolPage from '../pools/PoolPage';
 export default function Shell() {
+  interface INavigationItem {
+    name: string;
+    path?: string;
+    icon: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+    current: boolean;
+    element?: () => JSX.Element;
+    subpaths?: { subpath: string; subElement: () => JSX.Element }[];
+    children?: { name: string; path: string; element: () => JSX.Element; current: boolean }[];
+  }
 
-  
-  const navigation = [
-    { name: 'Dashboard', path: 'dashboard', icon: HomeIcon, current: true, element: <Dashboard /> },
-    { name: 'Pools', path: 'pools', icon: CurrencyDollarIcon, current: false, element: <Pools /> },
-    { name: 'Strategies', path: 'strategies', icon: LightBulbIcon, current: false, element: <Strategies /> },
+  const navigation: INavigationItem[] = [
+    { name: 'Dashboard', path: 'dashboard', icon: HomeIcon, current: true, element: Dashboard },
+    {
+      name: 'Pools',
+      path: 'pools',
+      subpaths: [{ subpath: '/:pool_address', subElement: PoolPage }],
+      icon: CurrencyDollarIcon,
+      current: false,
+      element: Pools,
+    },
+    { name: 'Strategies', path: 'strategies', icon: LightBulbIcon, current: false, element: Strategies },
     {
       name: 'Send Transaction',
-      path: 'contract/*',
+      // path: 'contract/*',
       current: false,
       icon: CodeBracketIcon,
       children: [
-        { name: 'Deploy Contract', href: 'deploy', element: <ContractDeploy />, current: false },
-        { name: 'Write to Contract', href: 'write', element: <ContractWrite />, current: false },
+        { name: 'Deploy Contract', path: 'deploy', element: ContractDeploy, current: false },
+        { name: 'Write to Contract', path: 'write', element: ContractWrite, current: false },
       ],
     },
   ];
@@ -72,10 +89,10 @@ export default function Shell() {
               leaveTo="transform scale-95 opacity-0"
             >
               <Disclosure.Panel className="space-y-1">
-                {item.children.map((subItem) => (
+                {item.children?.map((subItem) => (
                   <Link
                     key={subItem.name}
-                    to={subItem.href}
+                    to={subItem.path}
                     className="group w-full flex items-center pl-10 pr-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:text-white hover:bg-gray-600"
                   >
                     {subItem.name}
@@ -205,17 +222,25 @@ export default function Shell() {
         </div>
         <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none max-h-screen">
           <Routes>
-            {navigation.map((item) =>
-              item.children ? (
-                // <Route path={item.path}>
-                  item.children.map((subItem) => (
-                    <Route path={subItem.href} element={subItem.element} />
+            {navigation.map((item) => (
+              <>
+                {item.children ? (
+                  // <Route path={item.path}>
+                  item.children.map((subItem) => <Route path={subItem.path} element={<subItem.element />} />)
+                ) : (
+                  // </Route>
+                  <Route path={item.path} element={item.element ? <item.element /> : <></>} />
+                )}
+
+                {item.subpaths ? (
+                  item.subpaths.map((subItem) => (
+                    <Route path={item.path + subItem.subpath} element={<subItem.subElement />} />
                   ))
-                // </Route>
-              ) : (
-                <Route path={item.path} element={item.element} />
-              )
-            )}
+                ) : (
+                  <></>
+                )}
+              </>
+            ))}
           </Routes>
         </main>
       </div>

@@ -2,7 +2,7 @@ import { createContext, PropsWithChildren, useEffect, useRef, useState } from 'r
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import { globalStates, ModalOpen, supportedChains } from '../@types/types';
+import { globalStates, IPoolItem, ModalOpen, supportedChains } from '../@types/types';
 export const blockExplorer = 'https://explorer.execution.l16.lukso.network/address/';
 
 export const INITIAL_GUARDIAN_LIST = { 0: { name: '', address: '' } };
@@ -37,6 +37,39 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
   const [unsupportedNet, setUnsupportedNet] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<ModalOpen>(null);
 
+  const pools: IPoolItem[] = [
+    {
+      group: 'DataX',
+      name: '1K promotion',
+      description: 'Swaps for over 1K on DataX',
+      address: '0x01',
+      balance: '800 LYXt',
+    },
+    {
+      group: 'Relayd',
+      name: '1st contract deployment',
+      description: 'First Contract deployment using Relayd',
+      address: '0x02',
+      balance: '800 LYXt',
+    },
+    {
+      group: 'DataX',
+      name: 'lucky winner promotion',
+      description: '1 in 10 transactions',
+      address: '0x03',
+      balance: '800 LYXt',
+    },
+    {
+      group: 'Guardians',
+      name: 'First five vaults',
+      description: 'First 5 vaults on Guardians',
+      address: '0x04',
+      balance: '800 LYXt',
+    },
+  ];
+
+  const [userPools, setUserPools] = useState<IPoolItem[]>(pools);
+  const [allPools, setAllPools] = useState<IPoolItem[]>([...pools, ...pools, ...pools, ...pools]);
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
   // intitialize web3modal to use to connect to provider
@@ -193,6 +226,8 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         web3,
         modalOpen,
         setModalOpen,
+        userPools,
+        allPools,
       }}
     >
       <>{children}</>

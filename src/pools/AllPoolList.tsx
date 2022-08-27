@@ -1,14 +1,16 @@
 import { Disclosure } from '@headlessui/react';
+import { useContext } from 'react';
 import { IPoolItem } from '../@types/types';
-import { classNames } from '../context/GlobalState';
+import { classNames, GlobalContext } from '../context/GlobalState';
 import AllPoolListItem from './AllPoolListItem';
 import PoolListContainer from './PoolListContainer';
 import UserPoolListItem from './UserPoolListItem';
 
-export default function AllPoolList({ pools }: { pools: IPoolItem[] }) {
+export default function AllPoolList() {
+  const {allPools} = useContext(GlobalContext)
   return (
     <PoolListContainer>
-      {pools.map((pool) => (
+      {allPools.map((pool) => (
         <>
           <Disclosure>
             {({ open }) => (

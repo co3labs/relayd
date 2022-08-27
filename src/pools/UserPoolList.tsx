@@ -1,15 +1,17 @@
 import { Disclosure } from '@headlessui/react';
+import { useContext } from 'react';
 import { IPoolItem } from '../@types/types';
-import { classNames } from '../context/GlobalState';
+import { classNames, GlobalContext } from '../context/GlobalState';
 import PoolListContainer from './PoolListContainer';
 import UserPoolListItem from './UserPoolListItem';
 
-export default function UserPoolList({ pools }: { pools: IPoolItem[] }) {
+export default function UserPoolList() {
+  const { userPools } = useContext(GlobalContext);
   return (
     <PoolListContainer>
-      {pools.map((pool) => (
+      {userPools.map((pool) => (
         <>
-          <Disclosure>
+          {/* <Disclosure>
             {({ open }) => (
               <>
                 <Disclosure.Button
@@ -18,9 +20,9 @@ export default function UserPoolList({ pools }: { pools: IPoolItem[] }) {
                     'focus:outline-none focus-visible:ring focus-visible:ring-purple-500',
                     'focus-visible:ring-opacity-75'
                   )}
-                >
-                  <UserPoolListItem pool={pool} />
-                </Disclosure.Button>
+                > */}
+          <UserPoolListItem pool={pool} />
+          {/* </Disclosure.Button>
                 <Disclosure.Panel className="grid grid-cols-1 md:grid-cols-2 py-4 px-12 text-sm text-gray-500">
                   <div>
                     <p>Group</p>
@@ -33,7 +35,7 @@ export default function UserPoolList({ pools }: { pools: IPoolItem[] }) {
                 </Disclosure.Panel>
               </>
             )}
-          </Disclosure>
+          </Disclosure>*/}
         </>
       ))}
     </PoolListContainer>
