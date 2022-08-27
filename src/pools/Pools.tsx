@@ -9,8 +9,9 @@ import {
 import { Fragment, useState } from 'react';
 import { IPoolItem } from '../@types/types';
 import { classNames, getShortId } from '../context/GlobalState';
+import AllPoolList from './AllPoolList';
 import CreatePoolForm from './CreatePoolForm';
-import PoolList from './PoolList';
+import UserPoolList from './UserPoolList';
 import UserPoolListItem from './UserPoolListItem';
 
 export default function Pools() {
@@ -50,27 +51,38 @@ export default function Pools() {
   return (
     <div className="px-6 pt-6 flex flex-col max-h-full">
       <Tab.Group>
-        <Tab.List className="static">
+        <Tab.List className="pb-3 flex relative w-full first:rounded-l-full last:rounded-r-full">
           {tabs.map((tab) => (
-            <Tab
-              className={({ selected }) =>
-                classNames(
-                  selected ? 'bg-gray-700 text-white' : 'bg-opacity-0 text-gray-400',
-                  'px-4 py-2  hover:text-white rounded-sm focus:border-gray-400'
-                )
-              }
-            >
-              {tab}
+            <Tab as={Fragment}>
+              {({ selected }) => (
+                <div className="relative">
+                  <div
+                    className={classNames(
+                      selected ? 'bg-blue-800' : 'bg-gray-200',
+                      'h-1 left-0 right-0  absolute bottom-0'
+                    )}
+                  />
+                  <button
+                    className={classNames(
+                      selected ? ' text-gray-900' : 'bg-opacity-0 text-gray-400 hover:text-gray-800 ',
+                      'px-4 py-2  rounded-sm focus:border-gray-400'
+                    )}
+                  >
+                    {tab}
+                  </button>
+                </div>
+              )}
             </Tab>
           ))}
+          <div className="absolute top-full w-full h-6 bg-gradient-to-b from-gray-100 to-transparent " />
         </Tab.List>
-        <div className='overflow-scroll flex-grow max-h-full  no-scrollbar'>
+        <div className="overflow-scroll flex-grow max-h-full  no-scrollbar">
           <Tab.Panels>
             <Tab.Panel>
-              <PoolList pools={existingPools} />
+              <UserPoolList pools={existingPools} />
             </Tab.Panel>
             <Tab.Panel>
-              <PoolList pools={[...existingPools, ...existingPools, ...existingPools, ...existingPools]} />
+              <AllPoolList pools={[...existingPools, ...existingPools, ...existingPools, ...existingPools]} />
             </Tab.Panel>
             <Tab.Panel>
               <CreatePoolForm />
