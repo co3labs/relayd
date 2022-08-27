@@ -19,14 +19,14 @@ import ModalToggles from './ModalToggles';
 import { classNames } from '../context/GlobalState';
 import ContractDeploy from './ContractDeploy';
 import ContractWrite from './ContractWrite';
-import Strategy from './Strategy';
+import Strategies from './Strategies';
 export default function Shell() {
 
   
   const navigation = [
     { name: 'Dashboard', path: 'dashboard', icon: HomeIcon, current: true, element: <Dashboard /> },
     { name: 'Pools', path: 'pools', icon: CurrencyDollarIcon, current: false, element: <Pools /> },
-    { name: 'Strategy', path: 'strategy', icon: LightBulbIcon, current: false, element: <Strategy /> },
+    { name: 'Strategies', path: 'strategies', icon: LightBulbIcon, current: false, element: <Strategies /> },
     {
       name: 'Send Transaction',
       path: 'contract/*',

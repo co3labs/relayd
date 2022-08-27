@@ -8,6 +8,14 @@ export type ITxProgress = 'loading' | 'failed' | 'success' | '';
 
 export type VoidFunciton = () => void;
 
+export interface IPoolItem {
+  group: string;
+  name: string;
+  description: string;
+  address: string;
+  balance: string;
+}
+
 export interface globalStates {
   handleConnect: VoidFunciton;
   walletAddress?: string;

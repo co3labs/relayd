@@ -1,13 +1,18 @@
 import { Tab, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import { ChangeEventHandler, FormEvent, FormEventHandler, Fragment, useContext } from 'react';
-import { classNames, GlobalContext } from '../context/GlobalState';
+import { ClipboardIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { ChangeEventHandler, FormEvent, FormEventHandler, Fragment, useContext, useState } from 'react';
+import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 import FocusModalContainer from './FocusModalContainer';
 
 export default function Recharge() {
   const { showRechargeModal, setShowRechargeModal } = useContext(GlobalContext);
-
+  const [selectedAddress, setSelectedAddress] = useState('');
   const tabs = ['Fiat', 'Crypto'];
+  const pools = [
+    { name: 'Pool A', address: '0x01' },
+    { name: 'Pool B', address: '0x02' },
+    { name: 'Pool C', address: '0x03' },
+  ];
 
   function fiatRechargeHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -99,36 +104,6 @@ export default function Recharge() {
                     </div>
                   </div>
                 </fieldset>
-                <fieldset className="mt-6 ">
-                  <legend className="block text-sm font-medium text-white">Billing address</legend>
-                  <div className="mt-1 rounded-md shadow-sm -space-y-px">
-                    <div>
-                      <label htmlFor="country" className="sr-only">
-                        Country
-                      </label>
-                      <select
-                        id="country"
-                        name="country"
-                        className="text-white focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-none rounded-t-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
-                      >
-                        <option>USA</option>
-                        <option>Canada</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label htmlFor="postal-code" className="sr-only text-white">
-                        Postal code
-                      </label>
-                      <input
-                        type="text"
-                        name="postal-code"
-                        id="postal-code"
-                        className="text-white focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-none rounded-b-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
-                        placeholder="Postal code"
-                      />
-                    </div>
-                  </div>
-                </fieldset>
                 <fieldset className="mt-6">
                   <legend className="block text-sm font-medium text-white">Recharge Amount</legend>
                   <div>
@@ -183,6 +158,83 @@ export default function Recharge() {
                     </div>
                   </div>
                 </fieldset>
+                <fieldset className="mt-6 ">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="">
+                      <label htmlFor="country" className="block text-sm font-medium text-gray-50 mr-6">
+                        Pool
+                      </label>
+                      <div className="mt-1">
+                        <select
+                          id="country"
+                          name="country"
+                          autoComplete="country"
+                          className="shadow-sm bg-gray-800 text-gray-50 focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        >
+                          {pools.map((pool) => (
+                            <option
+                              id={pool.name}
+                              value={pool.address}
+                              onClick={() => setSelectedAddress(pool.address)}
+                            >
+                              {pool.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="">
+                      <label htmlFor="pool-address" className="block text-sm font-medium text-gray-50 mr-6">
+                        Address
+                      </label>
+                      <div className="flex items-center p-2 border-t border-x-0 border-b-0 border-gray-600 ">
+                        <p
+                          id="pool-address"
+                          className="text-gray-50 font-medium w-fit text-sm mt-1 bg-transparent border-none focus:border-transparent"
+                        >
+                          {' '}
+                          {selectedAddress ? getShortId(selectedAddress) : 'No pool selected.'}
+                        </p>
+                        {selectedAddress ? (
+                          <button>
+                            <ClipboardIcon className="w-4 h-4 text-gray-50 ml-3" />
+                          </button>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  {/* <legend className="block text-sm font-medium text-white">Billing address</legend>
+                  <div className="mt-1 rounded-md shadow-sm -space-y-px">
+                    <div>
+                      <label htmlFor="country" className="sr-only">
+                        Country
+                      </label>
+                      <select
+                        id="country"
+                        name="country"
+                        className="text-white focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-none rounded-t-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
+                      >
+                        <option>USA</option>
+                        <option>Canada</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="postal-code" className="sr-only text-white">
+                        Postal code
+                      </label>
+                      <input
+                        type="text"
+                        name="postal-code"
+                        id="postal-code"
+                        className="text-white focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-none rounded-b-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
+                        placeholder="Postal code"
+                      />
+                    </div>
+                  </div> */}
+                </fieldset>
+
                 <button
                   className="text-sm font-medium mt-6 text-gray-400 hover:text-white w-full py-1 rounded-md bg-transparent border border-gray-400 hover:border-white hover:bg-gray-700"
                   type="submit"
@@ -214,12 +266,48 @@ export default function Recharge() {
                     </div>
                   </div>
                 </div>
-
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="">
+                    <label htmlFor="country" className="block text-sm font-medium text-gray-50 mr-6">
+                      Pool
+                    </label>
+                    <div className="mt-1">
+                      <select
+                        id="country"
+                        name="country"
+                        autoComplete="country"
+                        className="shadow-sm bg-gray-800 text-gray-50 focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                      >
+                        {pools.map((pool) => (
+                          <option id={pool.name} value={pool.address} onClick={() => setSelectedAddress(pool.address)}>
+                            {pool.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="">
+                    <label htmlFor="pool-address" className="block text-sm font-medium text-gray-50 mr-6">
+                      Address
+                    </label>
+                    <input
+                      type="text"
+                      name="pool-address"
+                      id="pool-address"
+                      value={selectedAddress ? getShortId(selectedAddress) : 'No pool selected.'}
+                      readOnly
+                      className="text-gray-50 font-medium text-sm mt-1 bg-transparent border-t border-x-0 border-b-0 border-gray-600 focus:border-transparent pointer-events-none"
+                    />
+                  </div>
+                </div>
+                <p className="text-gray-400 font-light">
+                  Send funds the specified amount of funds to this address then click the button below.
+                </p>
                 <button
                   className="text-sm font-medium mt-6 text-gray-400 hover:text-white w-full py-1 rounded-md bg-transparent border border-gray-400 hover:border-white hover:bg-gray-700"
                   type="submit"
                 >
-                  Recharge
+                  Funds have been sent
                 </button>
               </form>
             </Tab.Panel>
