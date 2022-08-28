@@ -5,9 +5,9 @@ import AllStrategies from './AllStrategies';
 import CreateStrategy from './CreateStrategy';
 import UserStrategies from './UserStrategies';
 
-export default function Strategies() {
+export default function Policies() {
   const { userPools, allPools } = useContext(GlobalContext);
-  const tabs = ['My Strategies', 'All Strategies', 'Create a New Strategy'];
+  const tabs = ['My Policies', 'All Policies', 'Create a New Policy'];
   return (
     <>
       <div className="px-6 pt-6 flex flex-col max-h-full">
@@ -19,7 +19,7 @@ export default function Strategies() {
                   <div className="relative">
                     <div
                       className={classNames(
-                        selected ? 'bg-blue-800' : 'bg-gray-200',
+                        selected ? 'bg-indigo-600' : 'bg-gray-200',
                         'h-1 left-0 right-0  absolute bottom-0'
                       )}
                     />

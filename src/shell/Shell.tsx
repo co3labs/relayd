@@ -1,18 +1,16 @@
-import { Children, Fragment, PropsWithChildren, SVGProps, useContext, useState } from 'react';
+import { Fragment, SVGProps, useState } from 'react';
 import { Dialog, Transition, Disclosure } from '@headlessui/react';
 import {
   CodeBracketIcon,
   HomeIcon,
   Bars3Icon,
-  UsersIcon,
   XMarkIcon,
   ChevronDownIcon,
   ArrowLeftOnRectangleIcon,
   CurrencyDollarIcon,
   LightBulbIcon,
-  HandRaisedIcon,
 } from '@heroicons/react/24/outline';
-import { Link, matchPath, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import Dashboard from '../dashboard/Dashboard';
 import Pools from '../pools/Pools';
 import ProfileData from './ProfileData';
@@ -20,7 +18,7 @@ import ModalToggles from './ModalToggles';
 import { classNames } from '../context/GlobalState';
 import ContractDeploy from '../contract-tools/ContractDeploy';
 import ContractWrite from '../contract-tools/ContractWrite';
-import Strategies from '../strategies/Strategies';
+import Policies from '../policies/Policies';
 import Pool from '../pools/Pool';
 export default function Shell() {
   interface INavigationItem {
@@ -43,9 +41,9 @@ export default function Shell() {
       current: false,
       element: Pools,
     },
-    { name: 'Strategies', path: 'strategies', icon: LightBulbIcon, current: false, element: Strategies },
+    { name: 'Policies', path: 'policies', icon: LightBulbIcon, current: false, element: Policies },
     {
-      name: 'Send Transaction',
+      name: 'Web3 Tools',
       // path: 'contract/*',
       current: false,
       icon: CodeBracketIcon,
@@ -166,7 +164,12 @@ export default function Shell() {
                 </div>
               </Transition.Child>
               <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                <div className="flex-shrink-0 flex items-center px-4 font-bold text-4xl text-white">Relayd</div>
+                <div className="w-full justify-center flex items-end">
+                  <h1 className="font-dmserfif text-zinc-50 text-6xl relative">
+                    relay<span className="font-dmserfif text-indigo-600">d</span>
+                    <div className="w-2 h-2 bg-indigo-600 ml-1 absolute -right-3 bottom-2" />
+                  </h1>
+                </div>
                 <ProfileData />
                 <ModalToggles />
                 <nav className="mt-5 px-2 space-y-1">{navigationElements}</nav>
@@ -185,7 +188,12 @@ export default function Shell() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex-1 flex flex-col min-h-0">
             <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-              <div className="flex items-center flex-shrink-0 px-4 font-bold text-4xl text-white">Relayd</div>
+              <div className="w-full justify-start px-4 flex items-end">
+                <h1 className="font-dmserfif text-zinc-50 text-4xl relative">
+                  relay<span className="font-dmserfif text-indigo-600">d</span>
+                  <div className="w-[.4rem] h-[.4rem] bg-indigo-600 ml-1 absolute -right-3 bottom-2" />
+                </h1>
+              </div>{' '}
               <ProfileData />
               <ModalToggles />
               <nav className="mt-5 flex-0 px-2 space-y-1">{navigationElements}</nav>
