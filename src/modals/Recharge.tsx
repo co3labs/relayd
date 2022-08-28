@@ -22,7 +22,7 @@ export default function Recharge() {
     e.preventDefault();
   }
 
-  return modalOpen === "recharge" ? (
+  return modalOpen === 'recharge' ? (
     // <Transition
     // show={showRechargeModal}
     // enter="transition duration-100 ease-out"
@@ -34,7 +34,8 @@ export default function Recharge() {
     // >
     <FocusModalContainer>
       <div className="bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-400">
-        <div className="w-full flex justify-end">
+        <div className="w-full flex justify-between items-start">
+          <h2 className="text-xl text-white mb-4">Recharge</h2>
           <button
             onClick={() => {
               setModalOpen(null);
