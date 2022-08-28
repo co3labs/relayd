@@ -4,9 +4,9 @@ import { Fragment, useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { IPoolItem } from '../@types/types';
 import { classNames, GlobalContext } from '../context/GlobalState';
-import AllPoolList from './AllPoolList';
+import AllPools from './AllPools';
 import CreatePoolForm from './CreatePoolForm';
-import UserPoolList from './UserPoolList';
+import UserPools from './UserPools';
 
 export default function Pools() {
   const { userPools, allPools } = useContext(GlobalContext);
@@ -43,10 +43,10 @@ export default function Pools() {
           <div className="overflow-scroll flex-grow max-h-full  no-scrollbar">
             <Tab.Panels>
               <Tab.Panel>
-                <UserPoolList />
+                <UserPools />
               </Tab.Panel>
               <Tab.Panel>
-                <AllPoolList />
+                <AllPools />
               </Tab.Panel>
               <Tab.Panel>
                 <CreatePoolForm />

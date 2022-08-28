@@ -2,14 +2,15 @@ import { Disclosure } from '@headlessui/react';
 import { useContext } from 'react';
 import { IPoolItem } from '../@types/types';
 import { classNames, GlobalContext } from '../context/GlobalState';
+import AllPoolsItem from './AllPoolsItem';
 import PoolListContainer from './PoolListContainer';
-import UserPoolListItem from './UserPoolListItem';
+import UserPoolsItem from './UserPoolsItem';
 
-export default function UserPoolList() {
-  const { userPools } = useContext(GlobalContext);
+export default function AllPools() {
+  const {allPools} = useContext(GlobalContext)
   return (
     <PoolListContainer>
-      {userPools.map((pool, index) => (
+      {allPools.map((pool, index) => (
         <>
           {/* <Disclosure>
             {({ open }) => (
@@ -21,8 +22,8 @@ export default function UserPoolList() {
                     'focus-visible:ring-opacity-75'
                   )}
                 > */}
-          <UserPoolListItem pool={pool} index={index}/>
-          {/* </Disclosure.Button>
+                  <AllPoolsItem pool={pool} index={index} />
+                {/* </Disclosure.Button>
                 <Disclosure.Panel className="grid grid-cols-1 md:grid-cols-2 py-4 px-12 text-sm text-gray-500">
                   <div>
                     <p>Group</p>
@@ -35,7 +36,7 @@ export default function UserPoolList() {
                 </Disclosure.Panel>
               </>
             )}
-          </Disclosure>*/}
+          </Disclosure> */}
         </>
       ))}
     </PoolListContainer>
