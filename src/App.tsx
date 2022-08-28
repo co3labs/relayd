@@ -4,7 +4,7 @@ import Shell from './shell/Shell';
 import Hero from './Components/Hero';
 import NotFound from './Components/NotFound';
 import Recharge from './modals/Recharge';
-import Signup from './Components/Signup';
+import Login from './Components/Login';
 import Withdrawal from './modals/Withdraw';
 
 export default function App() {
@@ -14,7 +14,7 @@ export default function App() {
       <Withdrawal/>
       <Routes>
         <Route path="" element={<Hero />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/account/*" element={<Shell />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
