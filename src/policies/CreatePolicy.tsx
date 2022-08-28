@@ -109,25 +109,25 @@ export default function Createpolicy() {
             <div className="p-4 flex flex-grow flex-col w-full bg-white  border border-gray-300 rounded-md">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex flex-col max-w-[15rem] mr-2">
-                    <label htmlFor="functions" className="sr-only">
-                      Incentive Function
-                    </label>
-                    <select
-                      id="functions"
-                      name="functions"
-                      onChange={(e) => {
-                        console.log(functions[Number(e.target.value)]);
-                        setSelectedFunction(functions[Number(e.target.value)]);
-                      }}
-                      className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md "
-                    >
-                      <option selected disabled>
-                        Select a Function
-                      </option>
-                      {functions.map(({ name }, index) => (
-                        <option value={index}>{name}</option>
-                      ))}
-                    </select>
+                  <label htmlFor="functions" className="sr-only">
+                    Incentive Function
+                  </label>
+                  <select
+                    id="functions"
+                    name="functions"
+                    onChange={(e) => {
+                      console.log(functions[Number(e.target.value)]);
+                      setSelectedFunction(functions[Number(e.target.value)]);
+                    }}
+                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md "
+                  >
+                    <option selected disabled>
+                      Select a Function
+                    </option>
+                    {functions.map(({ name }, index) => (
+                      <option value={index}>{name}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="flex flex-col  text-gray-900 mt-6 lg:mt-0 max-w-[15rem]">
                   <div className="flex flex-row w-full justify-between mb-3">
@@ -240,11 +240,11 @@ export default function Createpolicy() {
 
       <div className="mt-8 w-full flex flex-col items-center">
         <div className="py-6">
-          <button
+        <button
             type="submit"
-            className="py-4 px-12 text-gray-400 hover:text-gray-800 rounded border hover:border-indigo-600 border-indigo-400"
+            className="py-4 px-12 text-gray-600 shadow-sm border-transparent rounded border bg-gray-100 hover:border-indigo-600 hover:bg-indigo-100 hover:text-indigo-800"
           >
-            Create policy
+            Create Policy
           </button>{' '}
         </div>
       </div>

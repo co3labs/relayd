@@ -16,8 +16,8 @@ import Pools from '../pools/Pools';
 import ProfileData from './ProfileData';
 import ModalToggles from './ModalToggles';
 import { classNames } from '../context/GlobalState';
-import ContractDeploy from '../contract-tools/ContractDeploy';
-import ContractWrite from '../contract-tools/ContractWrite';
+import ContractDeploy from '../web3-tools/ContractDeploy';
+import ContractWrite from '../web3-tools/ContractWrite';
 import Policies from '../policies/Policies';
 import Pool from '../pools/Pool';
 export default function Shell() {

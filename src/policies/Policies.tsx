@@ -2,7 +2,7 @@ import { Tab } from '@headlessui/react';
 import { Fragment, useContext } from 'react';
 import { classNames, GlobalContext } from '../context/GlobalState';
 import AllStrategies from './AllStrategies';
-import CreateStrategy from './CreateStrategy';
+import CreateStrategy from './CreatePolicy';
 import UserStrategies from './UserStrategies';
 
 export default function Policies() {
