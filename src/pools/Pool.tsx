@@ -9,7 +9,7 @@ import {
 import { spawn } from 'child_process';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Toggle from '../components/Toggle';
+import Toggle from '../Components/Toggle';
 import { blockExplorer, classNames, getShortId, GlobalContext } from '../context/GlobalState';
 
 export default function PublicPool() {

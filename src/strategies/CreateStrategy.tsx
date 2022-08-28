@@ -1,7 +1,7 @@
 import { CheckIcon, ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { IContractFunction, IFunctionParam } from '../@types/types';
-import Toggle from '../components/Toggle';
+import Toggle from '../Components/Toggle';
 import { classNames } from '../context/GlobalState';
 const steps = [
   { name: 'Specify Contract', status: 'current', href: '#', id: 1 },

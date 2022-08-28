@@ -2,7 +2,7 @@ import { ArrowTopRightOnSquareIcon, Bars2Icon } from '@heroicons/react/24/outlin
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IPoolItem } from '../@types/types';
-import Toggle from '../components/Toggle';
+import Toggle from '../Components/Toggle';
 import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 
 export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index: number }) {

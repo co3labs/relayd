@@ -2,8 +2,8 @@ import { Disclosure } from '@headlessui/react';
 import { useContext } from 'react';
 import { IPoolItem } from '../@types/types';
 import { classNames, GlobalContext } from '../context/GlobalState';
-import PoolListContainer from '../components/ListContainer';
-import ListContainer from '../components/ListContainer';
+import PoolListContainer from '../Components/ListContainer';
+import ListContainer from '../Components/ListContainer';
 import UserStrategyItem from './UserStrategyItem';
 
 

@@ -1,10 +1,10 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Shell from './shell/Shell';
-import Hero from './components/Hero.js';
-import NotFound from './components/NotFound';
+import Hero from './Components/Hero';
+import NotFound from './Components/NotFound';
 import Recharge from './modals/Recharge';
-import Signup from './components/Signup';
+import Signup from './Components/Signup';
 import Withdrawal from './modals/Withdraw';
 
 export default function App() {
