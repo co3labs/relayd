@@ -7,7 +7,7 @@ export type supportedChains = 2828 | 4;
 export type ITxProgress = 'loading' | 'failed' | 'success' | '';
 
 export type VoidFunciton = () => void;
-export type ModalOpen = 'withdrawal' | 'recharge' | null;
+export type ModalOpen = 'withdraw' | 'recharge' | null;
 
 export interface IPoolItem {
   name: string;
@@ -16,6 +16,7 @@ export interface IPoolItem {
   balance: string;
   tags: string[]
   enabled:boolean
+  beneficiaries: {name:string; address:string}[]
 }
 
 export interface globalStates {
@@ -30,6 +31,6 @@ export interface globalStates {
   setUserPools: Dispatch<SetStateAction<IPoolItem[]>>
   allPools: IPoolItem[];
   setAllPools: Dispatch<SetStateAction<IPoolItem[]>>
-  currentPool: IPoolItem | undefined;
-  setCurrentPool: Dispatch<SetStateAction<IPoolItem | undefined>>;
+  currentPool: number | null;
+  setCurrentPool: Dispatch<SetStateAction<number | null>>;
 }

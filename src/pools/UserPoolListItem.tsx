@@ -12,7 +12,7 @@ export default function UserPoolListItem({ pool, index }: { pool: IPoolItem; ind
       <Link
         to={`${pool.address}`}
         onClick={() => {
-          setCurrentPool(pool);
+          setCurrentPool(index);
         }}
         className="block hover:bg-gray-50"
       >

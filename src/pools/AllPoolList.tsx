@@ -10,7 +10,7 @@ export default function AllPoolList() {
   const {allPools} = useContext(GlobalContext)
   return (
     <PoolListContainer>
-      {allPools.map((pool) => (
+      {allPools.map((pool, index) => (
         <>
           {/* <Disclosure>
             {({ open }) => (
@@ -22,7 +22,7 @@ export default function AllPoolList() {
                     'focus-visible:ring-opacity-75'
                   )}
                 > */}
-                  <AllPoolListItem pool={pool} />
+                  <AllPoolListItem pool={pool} index={index} />
                 {/* </Disclosure.Button>
                 <Disclosure.Panel className="grid grid-cols-1 md:grid-cols-2 py-4 px-12 text-sm text-gray-500">
                   <div>

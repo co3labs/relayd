@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { IPoolItem } from '../@types/types';
 import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 
-export default function AllPoolListItem({ pool }: { pool: IPoolItem }) {
+export default function AllPoolListItem({ pool, index }: { pool: IPoolItem; index: number }) {
   const { setCurrentPool } = useContext(GlobalContext);
 
   return (
@@ -12,7 +12,7 @@ export default function AllPoolListItem({ pool }: { pool: IPoolItem }) {
       <Link
         to={`${pool.address}`}
         onClick={() => {
-          setCurrentPool(pool);
+          setCurrentPool(index);
         }}
         className="block hover:bg-gray-50"
       >

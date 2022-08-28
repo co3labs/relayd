@@ -45,6 +45,15 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       balance: '800 LYXt',
       tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
       enabled: true,
+      beneficiaries: [
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+      ],
     },
     {
       name: '1st contract deployment',
@@ -53,6 +62,15 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       balance: '800 LYXt',
       tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
       enabled: true,
+      beneficiaries: [
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+      ],
     },
     {
       name: 'lucky winner promotion',
@@ -61,7 +79,17 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       balance: '800 LYXt',
       tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
       enabled: false,
+      beneficiaries: [
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+      ],
     },
+
     {
       name: 'First five vaults',
       description: 'First 5 vaults on Guardians',
@@ -69,12 +97,21 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       balance: '800 LYXt',
       tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
       enabled: true,
+      beneficiaries: [
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+        { name: 'Acct 1', address: '0x01' },
+      ],
     },
   ];
 
   const [userPools, setUserPools] = useState<IPoolItem[]>(pools);
   const [allPools, setAllPools] = useState<IPoolItem[]>([...pools, ...pools, ...pools, ...pools]);
-  const [currentPool, setCurrentPool] = useState<IPoolItem>();
+  const [currentPool, setCurrentPool] = useState<number | null>(null);
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
   // intitialize web3modal to use to connect to provider
@@ -236,7 +273,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         currentPool,
         setCurrentPool,
         setAllPools,
-        setUserPools
+        setUserPools,
       }}
     >
       <>{children}</>

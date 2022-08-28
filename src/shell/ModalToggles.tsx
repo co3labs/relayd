@@ -15,9 +15,9 @@ export default function ModalToggles() {
       icon: ArrowPathIcon,
     },
     {
-      name: 'withdrawal',
+      name: 'withdraw',
       onClick: () => {
-        setModalOpen('withdrawal');
+        setModalOpen('withdraw');
       },
       icon: ArrowUpOnSquareStackIcon,
     },
