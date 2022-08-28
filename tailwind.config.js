@@ -4,12 +4,13 @@ const colors = require('tailwindcss/colors');
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: 'class',
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
+  plugins: [require('@tailwindcss/forms')],
   mode: 'jit',
   theme: {
     extend: {
+      fontFamily: {
+        dmserfif: ["'DM Serif Display'", 'serif'],
+      },
       fontSize: {
         '2xs': ['0.6rem', '.8rem'],
         '3xs': ['0.5rem', '.75rem'],

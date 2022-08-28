@@ -1,9 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
 html {
-  @apply bg-primary-900;
+  @apply bg-white;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
