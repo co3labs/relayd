@@ -1,14 +1,21 @@
 import { ArrowTopRightOnSquareIcon, Bars2Icon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IPoolItem } from '../@types/types';
-import { classNames, getShortId } from '../context/GlobalState';
+import Toggle from '../components/Toggle';
+import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 
-export default function UserPoolListItem({ pool }: { pool: IPoolItem }) {
-  const [enabled, setEnabled] = useState(true);
+export default function UserPoolListItem({ pool, index }: { pool: IPoolItem; index: number }) {
+  const { setCurrentPool, userPools, setUserPools } = useContext(GlobalContext);
   return (
     <li className="w-full" key={pool.name}>
-      <Link to={`${pool.address}`} className="block hover:bg-gray-50">
+      <Link
+        to={`${pool.address}`}
+        onClick={() => {
+          setCurrentPool(pool);
+        }}
+        className="block hover:bg-gray-50"
+      >
         <div className="px-4 py-4 sm:px-6">
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-indigo-600 truncate">{pool.name}</p>
@@ -26,29 +33,14 @@ export default function UserPoolListItem({ pool }: { pool: IPoolItem }) {
                 <ArrowTopRightOnSquareIcon className="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" aria-hidden="true" />
               </p>
             </div>
-            <button
-              onClick={() => setEnabled(!enabled)}
-              className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0"
-            >
-              <div
-                className={classNames(
-                  enabled ? 'bg-green-300' : 'bg-red-400',
-                  'transition-colors duration-150 w-10 h-4 relative rounded-full'
-                )}
-              >
-                <div className="absolute top-0 left-0 right-0 bottom-0">
-                  <div
-                    className={classNames(
-                      enabled ? 'translate-x-full' : 'translate-x-0',
-                      'absolute top-2px left-2px right-1/2 bottom-2px bg-gray-50 rounded-full',
-                      'transition-transform duration-150 flex justify-center items-center'
-                    )}
-                  >
-                    <Bars2Icon className="h-2 rotate-90 text-gray-300" />
-                  </div>
-                </div>
-              </div>
-            </button>
+            <Toggle
+              enabled={pool.enabled}
+              onClick={() => {
+                const pools = [...userPools];
+                const update = { ...pool, enabled: !pool.enabled };
+                pools.splice(index, 1, update);
+              }}
+            />
           </div>
         </div>
       </Link>

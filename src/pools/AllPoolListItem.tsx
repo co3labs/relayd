@@ -1,12 +1,21 @@
 import { ArrowTopRightOnSquareIcon, Bars2Icon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IPoolItem } from '../@types/types';
-import { classNames, getShortId } from '../context/GlobalState';
+import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 
 export default function AllPoolListItem({ pool }: { pool: IPoolItem }) {
+  const { setCurrentPool } = useContext(GlobalContext);
+
   return (
     <li className="w-full" key={pool.name}>
-      <a href="#" className="block hover:bg-gray-50">
+      <Link
+        to={`${pool.address}`}
+        onClick={() => {
+          setCurrentPool(pool);
+        }}
+        className="block hover:bg-gray-50"
+      >
         <div className="px-4 py-4 sm:px-6">
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-indigo-600 truncate">{pool.name}</p>
@@ -25,7 +34,7 @@ export default function AllPoolListItem({ pool }: { pool: IPoolItem }) {
             </div>
           </div>
         </div>
-      </a>
+      </Link>
     </li>
   );
 }

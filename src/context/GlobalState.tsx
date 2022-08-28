@@ -39,32 +39,36 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
 
   const pools: IPoolItem[] = [
     {
-      group: 'DataX',
       name: '1K promotion',
       description: 'Swaps for over 1K on DataX',
       address: '0x01',
       balance: '800 LYXt',
+      tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
+      enabled: true,
     },
     {
-      group: 'Relayd',
       name: '1st contract deployment',
       description: 'First Contract deployment using Relayd',
       address: '0x02',
       balance: '800 LYXt',
+      tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
+      enabled: true,
     },
     {
-      group: 'DataX',
       name: 'lucky winner promotion',
       description: '1 in 10 transactions',
       address: '0x03',
       balance: '800 LYXt',
+      tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
+      enabled: false,
     },
     {
-      group: 'Guardians',
       name: 'First five vaults',
       description: 'First 5 vaults on Guardians',
       address: '0x04',
       balance: '800 LYXt',
+      tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
+      enabled: true,
     },
   ];
 
@@ -231,6 +235,8 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         allPools,
         currentPool,
         setCurrentPool,
+        setAllPools,
+        setUserPools
       }}
     >
       <>{children}</>

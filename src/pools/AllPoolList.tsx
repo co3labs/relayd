@@ -12,7 +12,7 @@ export default function AllPoolList() {
     <PoolListContainer>
       {allPools.map((pool) => (
         <>
-          <Disclosure>
+          {/* <Disclosure>
             {({ open }) => (
               <>
                 <Disclosure.Button
@@ -21,9 +21,9 @@ export default function AllPoolList() {
                     'focus:outline-none focus-visible:ring focus-visible:ring-purple-500',
                     'focus-visible:ring-opacity-75'
                   )}
-                >
+                > */}
                   <AllPoolListItem pool={pool} />
-                </Disclosure.Button>
+                {/* </Disclosure.Button>
                 <Disclosure.Panel className="grid grid-cols-1 md:grid-cols-2 py-4 px-12 text-sm text-gray-500">
                   <div>
                     <p>Group</p>
@@ -36,7 +36,7 @@ export default function AllPoolList() {
                 </Disclosure.Panel>
               </>
             )}
-          </Disclosure>
+          </Disclosure> */}
         </>
       ))}
     </PoolListContainer>

@@ -10,11 +10,12 @@ export type VoidFunciton = () => void;
 export type ModalOpen = 'withdrawal' | 'recharge' | null;
 
 export interface IPoolItem {
-  group: string;
   name: string;
   description: string;
   address: string;
   balance: string;
+  tags: string[]
+  enabled:boolean
 }
 
 export interface globalStates {
@@ -26,7 +27,9 @@ export interface globalStates {
   modalOpen: ModalOpen;
   setModalOpen: Dispatch<SetStateAction<ModalOpen>>;
   userPools: IPoolItem[];
+  setUserPools: Dispatch<SetStateAction<IPoolItem[]>>
   allPools: IPoolItem[];
+  setAllPools: Dispatch<SetStateAction<IPoolItem[]>>
   currentPool: IPoolItem | undefined;
   setCurrentPool: Dispatch<SetStateAction<IPoolItem | undefined>>;
 }
