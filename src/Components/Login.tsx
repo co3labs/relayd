@@ -12,7 +12,7 @@ export default function Login() {
             <div className="sm:mx-auto sm:w-full sm:max-w-md mb-6">
               <div className="w-full justify-center flex items-end">
                 <h1 className="font-dmserfif text-zinc-800 text-6xl relative">
-                  Relay<span className="font-dmserfif text-indigo-600">d</span>
+                  relay<span className="font-dmserfif text-indigo-600">d</span>
                   <div className="w-2 h-2 bg-indigo-600 ml-1 absolute -right-3 bottom-2" />
                 </h1>
               </div>
