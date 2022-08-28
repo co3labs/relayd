@@ -1,7 +1,7 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Shell from './shell/Shell';
-import Hero from './components/Hero';
+import Hero from './components/Hero.js';
 import NotFound from './components/NotFound';
 import Recharge from './modals/Recharge';
 import Signup from './components/Signup';
