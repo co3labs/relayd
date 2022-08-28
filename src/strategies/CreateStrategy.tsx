@@ -1,5 +1,6 @@
 import { CheckIcon, ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
+import { IContractFunction, IFunctionParam } from '../@types/types';
 import Toggle from '../components/Toggle';
 import { classNames } from '../context/GlobalState';
 const steps = [
@@ -7,15 +8,6 @@ const steps = [
   { name: 'Select Function', status: 'incomplete', href: '#', id: 2 },
   { name: 'Define Conditionals', status: 'incomplete', href: '#', id: 3 },
 ];
-
-interface IFunctionParam {
-  name: string;
-  type: 'string' | 'uint256';
-}
-interface IContractFunction {
-  name: string;
-  params: IFunctionParam[];
-}
 
 const functions: IContractFunction[] = [
   {
@@ -47,6 +39,7 @@ export default function CreateStrategy() {
   return (
     <form
       action=""
+      className="max-w-xl"
       onSubmit={(e) => {
         e.preventDefault();
         //   onSubmit(e);
@@ -108,7 +101,7 @@ export default function CreateStrategy() {
           </div>
         </div>
       </div>
-      <div className="px-4 flex justify-around flex-col lg:flex-row">
+      <div className="px-4 flex justify-around flex-col w-full lg:flex-row">
         <div className="flex flex-col max-w-[15rem]">
           <div>
             <label htmlFor="functions" className="block text-sm font-medium text-gray-900">
@@ -134,7 +127,7 @@ export default function CreateStrategy() {
         </div>
         <div className="flex flex-col text-gray-900 mt-6 lg:mt-0 max-w-[15rem]">
           <div className="flex flex-row w-full justify-between mb-3">
-            <span className="text-sm font-medium">Parameters</span>
+            <span className="text-sm font-medium mr-12">Parameters</span>
             <div className="relative flex items-start">
               <div className="flex items-center h-5">
                 <input
@@ -159,7 +152,7 @@ export default function CreateStrategy() {
               </div>
             </div>
           </div>
-          {selectedFunction?.params.map((param: IFunctionParam, index) => {
+          {selectedFunction?.params.map((param: IFunctionParam, index: number) => {
             switch (param.type) {
               case 'uint256':
                 return (
@@ -198,8 +191,7 @@ export default function CreateStrategy() {
                             'border-transparent bg-transparent sm:text-sm rounded-md w-16'
                           )}
                         >
-                          <option selected>All</option>
-                          <option>{'>'}</option>
+                          <option selected>{'>'}</option>
                           <option>{'<'}</option>
                           <option>{'='}</option>
                           <option>{'≥'}</option>

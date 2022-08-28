@@ -1,7 +1,9 @@
 import { Tab } from '@headlessui/react';
 import { Fragment, useContext } from 'react';
 import { classNames, GlobalContext } from '../context/GlobalState';
+import AllStrategies from './AllStrategies';
 import CreateStrategy from './CreateStrategy';
+import UserStrategies from './UserStrategies';
 
 export default function Strategies() {
   const { userPools, allPools } = useContext(GlobalContext);
@@ -38,10 +40,10 @@ export default function Strategies() {
           <div className="overflow-scroll flex-grow max-h-full  no-scrollbar">
             <Tab.Panels>
               <Tab.Panel>
-                <UserPoolList />
+                <UserStrategies />
               </Tab.Panel>
               <Tab.Panel>
-                <AllPoolList />
+                <AllStrategies />
               </Tab.Panel>
               <Tab.Panel>
                 <CreateStrategy />
@@ -53,7 +55,6 @@ export default function Strategies() {
     </>
   );
 }
-
 
 {
   /* <nav aria-label="Progress">

@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-export default function PoolListContainer({ children }: PropsWithChildren) {
+export default function ListContainer({ children }: PropsWithChildren) {
   return (
     <section className="mt-6">
       <div className="bg-white shadow overflow-hidden sm:rounded-md">

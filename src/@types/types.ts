@@ -9,14 +9,37 @@ export type ITxProgress = 'loading' | 'failed' | 'success' | '';
 export type VoidFunciton = () => void;
 export type ModalOpen = 'withdraw' | 'recharge' | null;
 
+export interface IFunctionParam {
+  name: string;
+  type: 'string' | 'uint256';
+}
+export interface IContractFunction {
+  name: string;
+  params: IFunctionParam[];
+}
+
+export type condition = '>' | '<' | '=' | '≥' | '≤' | 'all';
+export interface IStrategyCondition {
+  param_name: string;
+  condition: condition;
+  value: string;
+}
+export interface IStrategyItem {
+  name: string;
+  description: string;
+  abi: string;
+  conditions: IStrategyCondition[];
+  contract_name: string;
+}
+
 export interface IPoolItem {
   name: string;
   description: string;
   address: string;
   balance: string;
-  tags: string[]
-  enabled:boolean
-  beneficiaries: {name:string; address:string}[]
+  tags: string[];
+  enabled: boolean;
+  beneficiaries: { name: string; address: string }[];
 }
 
 export interface globalStates {
@@ -28,9 +51,13 @@ export interface globalStates {
   modalOpen: ModalOpen;
   setModalOpen: Dispatch<SetStateAction<ModalOpen>>;
   userPools: IPoolItem[];
-  setUserPools: Dispatch<SetStateAction<IPoolItem[]>>
+  setUserPools: Dispatch<SetStateAction<IPoolItem[]>>;
   allPools: IPoolItem[];
-  setAllPools: Dispatch<SetStateAction<IPoolItem[]>>
+  setAllPools: Dispatch<SetStateAction<IPoolItem[]>>;
   currentPool: number | null;
   setCurrentPool: Dispatch<SetStateAction<number | null>>;
+  userStrategies: IStrategyItem[];
+  setUserStrategies: Dispatch<SetStateAction<IStrategyItem[]>>;
+  allStrategies: IStrategyItem[];
+  setAllStrategies: Dispatch<SetStateAction<IStrategyItem[]>>;
 }

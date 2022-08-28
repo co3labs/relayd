@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { IPoolItem } from '../@types/types';
 import { classNames, GlobalContext } from '../context/GlobalState';
 import AllPoolsItem from './AllPoolsItem';
-import PoolListContainer from './PoolListContainer';
+import PoolListContainer from '../components/ListContainer';
 import UserPoolsItem from './UserPoolsItem';
 
 export default function AllPools() {
