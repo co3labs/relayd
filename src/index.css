@@ -3,7 +3,7 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
 html {
-  @apply bg-gray-100;
+  @apply bg-gray-100  scroll-smooth;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

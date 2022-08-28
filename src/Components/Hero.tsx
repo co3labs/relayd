@@ -14,9 +14,8 @@ import { GlobalContext } from '../context/GlobalState';
 import { CodeBracketIcon } from '@heroicons/react/20/solid';
 export default function Hero() {
   const navigation = [
-    { name: 'Features', href: '#' },
-    { name: 'Company', href: '#' },
-    { name: 'Marketplace', href: '#' },
+    { name: 'Features', href: '#features' },
+    { name: 'Docs', href: '#' },
   ];
 
   const features = [
@@ -47,7 +46,7 @@ export default function Hero() {
     <div className="min-h-screen">
       <div className="relative overflow-hidden">
         <Popover as="header" className="relative">
-          <div className="bg-gray-100 pt-6">
+          <div className="bg-gray-50 pt-6">
             <nav
               className="relative max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6"
               aria-label="Global"
@@ -71,13 +70,13 @@ export default function Hero() {
                 </div>
                 <div className="hidden space-x-8 md:flex md:ml-10">
                   {navigation.map((item) => (
-                    <Link
+                    <a
                       key={item.name}
-                      to={item.href}
+                      href={item.href}
                       className="text-base font-medium  text-gray-800  hover:text-indigo-600"
                     >
                       {item.name}
-                    </Link>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -105,7 +104,7 @@ export default function Hero() {
               focus
               className="absolute z-10 top-0 inset-x-0 p-2 transition transform origin-top md:hidden"
             >
-              <div className="rounded-lg shadow-md bg-gray-100 ring-1 ring-black ring-opacity-5 overflow-hidden">
+              <div className="rounded-lg shadow-md bg-gray-50 ring-1 ring-black ring-opacity-5 overflow-hidden">
                 <div className="px-5 pt-4 flex items-center justify-between">
                   <div className="sm:mx-auto sm:w-full sm:max-w-md mb-6">
                     <div className="w-full justify-center flex items-end">
@@ -149,7 +148,7 @@ export default function Hero() {
         </Popover>
 
         <main>
-          <div className="pt-10 bg-gray-100 sm:pt-16 lg:pt-8  lg:overflow-hidden">
+          <div className="pt-10 bg-gray-50 sm:pt-16 lg:pt-8  lg:overflow-hidden">
             <div className="mx-auto max-w-7xl lg:px-8">
               <div className="lg:grid lg:grid-cols-2 lg:gap-8">
                 <div className="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:px-0 lg:text-left lg:flex lg:items-center">
@@ -189,7 +188,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="bg-gray-50 overflow-hidden">
+          <div id="features" className="bg-gray-100 overflow-hidden">
             <div className="relative max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
               <svg
                 className="absolute top-0 left-full transform -translate-x-1/2 -translate-y-3/4 lg:left-auto lg:right-full lg:translate-x-2/3 lg:translate-y-1/4"
