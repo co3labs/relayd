@@ -21,7 +21,7 @@ export default function Login() {
               </h2>
             </div>
 
-            <form className="space-y-6" action="#" method="POST" onSubmit={() => navigate('/account/dashboard')}>
+            <form className="space-y-6" action="#" method="POST" onSubmit={() => navigate('/account/pools')}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-900">
                   Universal Profile Address

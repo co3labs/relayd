@@ -32,7 +32,7 @@ export default function Shell() {
   }
 
   const navigation: INavigationItem[] = [
-    { name: 'Dashboard', path: 'dashboard', icon: HomeIcon, current: true, element: Dashboard },
+    // { name: 'Dashboard', path: 'dashboard', icon: HomeIcon, current: true, element: Dashboard },
     {
       name: 'Pools',
       path: 'pools',

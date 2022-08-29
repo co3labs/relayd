@@ -44,7 +44,7 @@ export default function Recharge() {
             <XMarkIcon className="w-4 h-4 text-gray-400 hover:text-white" />
           </button>
         </div>
-        <Tab.Group>
+        {/* <Tab.Group>
           <Tab.List>
             {tabs.map((tab) => (
               <Tab
@@ -206,36 +206,7 @@ export default function Recharge() {
                       </div>
                     </div>
                   </div>
-                  {/* <legend className="block text-sm font-medium text-white">Billing address</legend>
-                  <div className="mt-1 rounded-md shadow-sm -space-y-px">
-                    <div>
-                      <label htmlFor="country" className="sr-only">
-                        Country
-                      </label>
-                      <select
-                        id="country"
-                        name="country"
-                        className="text-white focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-none rounded-t-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
-                      >
-                        <option>USA</option>
-                        <option>Canada</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label htmlFor="postal-code" className="sr-only text-white">
-                        Postal code
-                      </label>
-                      <input
-                        type="text"
-                        name="postal-code"
-                        id="postal-code"
-                        className="text-white focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-none rounded-b-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
-                        placeholder="Postal code"
-                      />
-                    </div>
-                  </div> */}
                 </fieldset>
-
                 <button
                   className="text-sm font-medium mt-6 text-gray-400 hover:text-white w-full py-1 rounded-md bg-transparent border border-gray-400 hover:border-white hover:bg-gray-700"
                   type="submit"
@@ -244,76 +215,75 @@ export default function Recharge() {
                 </button>
               </form>
             </Tab.Panel>
-            <Tab.Panel>
-              {' '}
-              <form className="space-y-6 py-6" onSubmit={cryptoRechargeHandler}>
-                <div>
-                  <label htmlFor="recharge-lukso-amt " className="text-sm font-medium text-white">
-                    Lusko Amount
-                  </label>
-                  <div className="relative rounded-md shadow-sm">
-                    <input
-                      type="text"
-                      name="recharge-lukso-amt"
-                      id="recharge-lukso-amt"
-                      className="text-white focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
-                      placeholder="0.00"
-                      aria-describedby="price-currency"
-                    />
-                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <span className="text-gray-500 sm:text-sm" id="price-currency">
-                        LYXt
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="">
-                    <label htmlFor="country" className="block text-sm font-medium text-gray-50 mr-6">
-                      Pool
-                    </label>
-                    <div className="mt-1">
-                      <select
-                        id="country"
-                        name="country"
-                        autoComplete="country"
-                        className="shadow-sm bg-gray-800 text-gray-50 focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                      >
-                        {pools.map((pool) => (
-                          <option id={pool.name} value={pool.address} onClick={() => setSelectedAddress(pool.address)}>
-                            {pool.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="">
-                    <label htmlFor="pool-address" className="block text-sm font-medium text-gray-50 mr-6">
-                      Address
-                    </label>
-                    <input
-                      type="text"
-                      name="pool-address"
-                      id="pool-address"
-                      value={selectedAddress ? getShortId(selectedAddress) : 'No pool selected.'}
-                      readOnly
-                      className="text-gray-50 font-medium text-sm mt-1 bg-transparent border-t border-x-0 border-b-0 border-gray-600 focus:border-transparent pointer-events-none"
-                    />
-                  </div>
-                </div>
-                <p className="text-gray-400 font-light">
-                  Send funds the specified amount of funds to this address then click the button below.
-                </p>
-                <button
-                  className="text-sm font-medium mt-6 text-gray-400 hover:text-white w-full py-1 rounded-md bg-transparent border border-gray-400 hover:border-white hover:bg-gray-700"
-                  type="submit"
+            <Tab.Panel> */}{' '}
+        <form className="space-y-6 py-6" onSubmit={cryptoRechargeHandler}>
+          <div>
+            <label htmlFor="recharge-lukso-amt " className="text-sm font-medium text-white">
+              Lusko Amount
+            </label>
+            <div className="relative rounded-md shadow-sm">
+              <input
+                type="text"
+                name="recharge-lukso-amt"
+                id="recharge-lukso-amt"
+                className="text-white focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
+                placeholder="0.00"
+                aria-describedby="price-currency"
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <span className="text-gray-500 sm:text-sm" id="price-currency">
+                  LYXt
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="">
+              <label htmlFor="country" className="block text-sm font-medium text-gray-50 mr-6">
+                Pool
+              </label>
+              <div className="mt-1">
+                <select
+                  id="country"
+                  name="country"
+                  autoComplete="country"
+                  className="shadow-sm bg-gray-800 text-gray-50 focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border-gray-300 rounded-md"
                 >
-                  Funds have been sent
-                </button>
-              </form>
-            </Tab.Panel>
+                  {pools.map((pool) => (
+                    <option id={pool.name} value={pool.address} onClick={() => setSelectedAddress(pool.address)}>
+                      {pool.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="">
+              <label htmlFor="pool-address" className="block text-sm font-medium text-gray-50 mr-6">
+                Address
+              </label>
+              <input
+                type="text"
+                name="pool-address"
+                id="pool-address"
+                value={selectedAddress ? getShortId(selectedAddress) : 'No pool selected.'}
+                readOnly
+                className="text-gray-50 font-medium text-sm mt-1 bg-transparent border-t border-x-0 border-b-0 border-gray-600 focus:border-transparent pointer-events-none"
+              />
+            </div>
+          </div>
+          <p className="text-gray-400 font-light">
+            Send funds the specified amount of funds to this address then click the button below.
+          </p>
+          <button
+            className="text-sm font-medium mt-6 text-gray-400 hover:text-white w-full py-1 rounded-md bg-transparent border border-gray-400 hover:border-white hover:bg-gray-700"
+            type="submit"
+          >
+            Funds have been sent
+          </button>
+        </form>
+        {/* </Tab.Panel>
           </Tab.Panels>
-        </Tab.Group>
+        </Tab.Group> */}
       </div>
     </FocusModalContainer>
   ) : (
