@@ -42,7 +42,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       name: '1K promotion',
       description: 'Swaps for over 1K on DataX',
       balance: '800 LYXt',
-      tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
+      tags: ['DataX', 'dApp', ],
       enabled: true,
       txCount: 327,
       beneficiaries: [
@@ -72,7 +72,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       name: 'lucky winner promotion',
       description: '1 in 10 transactions',
       balance: '800 LYXt',
-      tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
+      tags: ['DataX', 'hashmesh'],
       enabled: false,      txCount: 131,
 
       beneficiaries: [
@@ -89,7 +89,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       name: 'First five vaults',
       description: 'First 5 vaults on Guardians',
       balance: '800 LYXt',
-      tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
+      tags: ['dApp', 'datafi', 'hashmesh'],
       enabled: true,      txCount: 48,
 
       beneficiaries: [

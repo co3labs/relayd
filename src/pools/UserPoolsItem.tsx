@@ -54,8 +54,10 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
           </div>
           <div className="font-medium text-sm text-gray-500 flex flex-col items-center h-full justify-center">
             <div>
-              <p>{pool.beneficiaries.length} beneficiaries</p>
-              <p>{327} transactions</p>
+              <p><span className='text-green-600'>{pool.beneficiaries.length}</span> beneficiaries</p>
+              <p>
+                <span className='text-green-600'>{pool.txCount}</span> transactions
+              </p>
             </div>
           </div>
           <div className="mt-2 flex flex-col items-end">
