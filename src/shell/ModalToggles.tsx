@@ -14,13 +14,13 @@ export default function ModalToggles() {
       },
       icon: ArrowPathIcon,
     },
-    {
-      name: 'withdraw',
-      onClick: () => {
-        setModalOpen('withdraw');
-      },
-      icon: ArrowUpOnSquareStackIcon,
-    },
+    // {
+    //   name: 'withdraw',
+    //   onClick: () => {
+    //     setModalOpen('withdraw');
+    //   },
+    //   icon: ArrowUpOnSquareStackIcon,
+    // },
   ];
 
   return (

@@ -8,6 +8,9 @@ module.exports = {
   mode: 'jit',
   theme: {
     extend: {
+      extend: {
+        backgroundColor: ['even'],
+      },
       fontFamily: {
         dmserfif: ["'DM Serif Display'", 'serif'],
       },

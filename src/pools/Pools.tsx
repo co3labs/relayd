@@ -22,7 +22,7 @@ export default function Pools() {
                   <div className="relative">
                     <div
                       className={classNames(
-                        selected ? 'bg-blue-800' : 'bg-gray-200',
+                        selected ? 'bg-indigo-600' : 'bg-gray-200',
                         'h-1 left-0 right-0  absolute bottom-0'
                       )}
                     />
