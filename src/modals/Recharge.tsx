@@ -1,12 +1,14 @@
 import { Tab, Transition } from '@headlessui/react';
+import { CheckIcon } from '@heroicons/react/20/solid';
 import { ClipboardIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChangeEventHandler, FormEvent, FormEventHandler, Fragment, useContext, useState } from 'react';
 import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 import FocusModalContainer from './FocusModalContainer';
 
 export default function Recharge() {
-  const { modalOpen, setModalOpen } = useContext(GlobalContext);
+  const { modalOpen, setModalOpen, account } = useContext(GlobalContext);
   const [selectedAddress, setSelectedAddress] = useState('');
+  const [userCopied, setUserCopied] = useState(false);
   const tabs = ['Fiat', 'Crypto'];
   const pools = [
     { name: 'Pool A', address: '0x01' },
@@ -33,15 +35,15 @@ export default function Recharge() {
     // leaveTo="transform scale-95 opacity-0"
     // >
     <FocusModalContainer>
-      <div className="bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-400">
+      <div className="bg-gray-50 py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-400">
         <div className="w-full flex justify-between items-start">
-          <h2 className="text-xl text-white mb-4">Recharge</h2>
+          <h2 className="text-xl text-gray-800 mb-4">Recharge</h2>
           <button
             onClick={() => {
               setModalOpen(null);
             }}
           >
-            <XMarkIcon className="w-4 h-4 text-gray-400 hover:text-white" />
+            <XMarkIcon className="w-4 h-4 text-gray-400 hover:text-gray-800" />
           </button>
         </div>
         {/* <Tab.Group>
@@ -50,8 +52,8 @@ export default function Recharge() {
               <Tab
                 className={({ selected }) =>
                   classNames(
-                    selected ? 'bg-gray-700 text-white' : 'bg-opacity-0 text-gray-400',
-                    'px-4 py-2  hover:text-white rounded-sm focus:border-gray-400'
+                    selected ? 'bg-gray-700 text-gray-800' : 'bg-opacity-0 text-gray-400',
+                    'px-4 py-2  hover:text-gray-800 rounded-sm focus:border-gray-400'
                   )
                 }
               >
@@ -63,7 +65,7 @@ export default function Recharge() {
             <Tab.Panel>
               <form className="my-4" onSubmit={fiatRechargeHandler}>
                 <fieldset>
-                  <legend className="block text-sm font-medium text-white">Card Details</legend>
+                  <legend className="block text-sm font-medium text-gray-800">Card Details</legend>
                   <div className="mt-1 bg-gray-800 rounded-md shadow-sm -space-y-px">
                     <div>
                       <label htmlFor="card-number" className="sr-only">
@@ -106,9 +108,9 @@ export default function Recharge() {
                   </div>
                 </fieldset>
                 <fieldset className="mt-6">
-                  <legend className="block text-sm font-medium text-white">Recharge Amount</legend>
+                  <legend className="block text-sm font-medium text-gray-800">Recharge Amount</legend>
                   <div>
-                    <label htmlFor="recharge-fiat-amt" className="sr-only text-white">
+                    <label htmlFor="recharge-fiat-amt" className="sr-only text-gray-800">
                       Fiat Amount
                     </label>
                     <div className="mt-1 relative rounded-md shadow-sm">
@@ -119,7 +121,7 @@ export default function Recharge() {
                         type="text"
                         name="recharge-fiat-amt"
                         id="recharge-fiat-amt"
-                        className="text-white mt-1 focus:ring-gray-500 focus:border-gray-500 pl-7 pr-12 relative block w-full rounded-t-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
+                        className="text-gray-800 mt-1 focus:ring-gray-500 focus:border-gray-500 pl-7 pr-12 relative block w-full rounded-t-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
                         placeholder="0.00"
                       />
                       <div className="absolute inset-y-0 right-0 flex items-center">
@@ -139,7 +141,7 @@ export default function Recharge() {
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="recharge-lukso-amt" className="sr-only text-white">
+                    <label htmlFor="recharge-lukso-amt" className="sr-only text-gray-800">
                       Lusko Amount
                     </label>
                     <div className="relative rounded-md shadow-sm">
@@ -147,7 +149,7 @@ export default function Recharge() {
                         type="text"
                         name="recharge-lukso-amt"
                         id="recharge-lukso-amt"
-                        className="text-white focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-b-md bg-transparent focus:z-10 sm:text-sm border-gray-300 border-t-0 focus:border-t"
+                        className="text-gray-800 focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-b-md bg-transparent focus:z-10 sm:text-sm border-gray-300 border-t-0 focus:border-t"
                         placeholder="0.00"
                         aria-describedby="price-currency"
                       />
@@ -208,7 +210,7 @@ export default function Recharge() {
                   </div>
                 </fieldset>
                 <button
-                  className="text-sm font-medium mt-6 text-gray-400 hover:text-white w-full py-1 rounded-md bg-transparent border border-gray-400 hover:border-white hover:bg-gray-700"
+                  className="text-sm font-medium mt-6 text-gray-400 hover:text-gray-800 w-full py-1 rounded-md bg-transparent border border-gray-400 hover:border-white hover:bg-gray-700"
                   type="submit"
                 >
                   Recharge
@@ -218,7 +220,7 @@ export default function Recharge() {
             <Tab.Panel> */}{' '}
         <form className="space-y-6 py-6" onSubmit={cryptoRechargeHandler}>
           <div>
-            <label htmlFor="recharge-lukso-amt " className="text-sm font-medium text-white">
+            <label htmlFor="recharge-lukso-amt " className="text-sm font-medium text-gray-800">
               Lusko Amount
             </label>
             <div className="relative rounded-md shadow-sm">
@@ -226,7 +228,7 @@ export default function Recharge() {
                 type="text"
                 name="recharge-lukso-amt"
                 id="recharge-lukso-amt"
-                className="text-white focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
+                className="text-gray-800 focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
                 placeholder="0.00"
                 aria-describedby="price-currency"
               />
@@ -237,45 +239,27 @@ export default function Recharge() {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="">
-              <label htmlFor="country" className="block text-sm font-medium text-gray-50 mr-6">
-                Pool
-              </label>
-              <div className="mt-1">
-                <select
-                  id="country"
-                  name="country"
-                  autoComplete="country"
-                  className="shadow-sm bg-gray-800 text-gray-50 focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                >
-                  {pools.map((pool) => (
-                    <option id={pool.name} value={pool.address} onClick={() => setSelectedAddress(pool.address)}>
-                      {pool.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="">
-              <label htmlFor="pool-address" className="block text-sm font-medium text-gray-50 mr-6">
-                Address
-              </label>
-              <input
-                type="text"
-                name="pool-address"
-                id="pool-address"
-                value={selectedAddress ? getShortId(selectedAddress) : 'No pool selected.'}
-                readOnly
-                className="text-gray-50 font-medium text-sm mt-1 bg-transparent border-t border-x-0 border-b-0 border-gray-600 focus:border-transparent pointer-events-none"
-              />
-            </div>
+          <div className="flex-col">
+            <p className="block text-sm font-medium text-gray-800 mr-6 border-b mb-4">Deposit Address</p>
+            <button
+              className="flex items-center"
+              onClick={() => {
+                if (account?.address) navigator.clipboard.writeText(account?.address);
+                setUserCopied(true);
+                setTimeout(() => {
+                  setUserCopied(false);
+                }, 1000);
+              }}
+            >
+              <p className="text-sm mr-2">{account?.address}</p>
+              {userCopied ? <CheckIcon className="text-green-500 w-4 h-4" /> : <ClipboardIcon className="w-4 h-4" />}
+            </button>
           </div>
           <p className="text-gray-400 font-light">
             Send funds the specified amount of funds to this address then click the button below.
           </p>
           <button
-            className="text-sm font-medium mt-6 text-gray-400 hover:text-white w-full py-1 rounded-md bg-transparent border border-gray-400 hover:border-white hover:bg-gray-700"
+            className="text-sm font-medium mt-6 text-gray-400 hover:text-indigo-600 w-full py-1 rounded-md bg-transparent border border-gray-400 hover:border-indigo-400 hover:bg-indigo-100"
             type="submit"
           >
             Funds have been sent

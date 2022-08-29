@@ -2,7 +2,7 @@ import { createContext, PropsWithChildren, useEffect, useRef, useState } from 'r
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import { globalStates, IPoolItem, IStrategyItem, ModalOpen, supportedChains } from '../@types/types';
+import { Account, globalStates, IPoolItem, IStrategyItem, ModalOpen, supportedChains } from '../@types/types';
 export const blockExplorer = 'https://explorer.execution.l16.lukso.network/address/';
 
 export const INITIAL_GUARDIAN_LIST = { 0: { name: '', address: '' } };
@@ -36,13 +36,19 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
   const [web3, setWeb3] = useState<Web3>();
   const [unsupportedNet, setUnsupportedNet] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<ModalOpen>(null);
+  const [account, setAccount] = useState<Account | undefined>({
+    address: '0xD3d24669912914720d97AC7fD95a5E74858ae7fB',
+    name: 'Hashmesh Universal Profile',
+    description: 'Universal Profile for Hashmesh assets.',
+    balance: 467,
+  });
 
   const pools: IPoolItem[] = [
     {
       name: '1K promotion',
       description: 'Swaps for over 1K on DataX',
       balance: '800 LYXt',
-      tags: ['DataX', 'dApp', ],
+      tags: ['DataX', 'dApp'],
       enabled: true,
       txCount: 327,
       beneficiaries: [
@@ -57,7 +63,8 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       description: 'First Contract deployment using Relayd',
       balance: '800 LYXt',
       tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
-      enabled: true,      txCount: 24,
+      enabled: true,
+      txCount: 24,
 
       beneficiaries: [
         { name: 'Acct 1', address: '0x01' },
@@ -73,7 +80,8 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       description: '1 in 10 transactions',
       balance: '800 LYXt',
       tags: ['DataX', 'hashmesh'],
-      enabled: false,      txCount: 131,
+      enabled: false,
+      txCount: 131,
 
       beneficiaries: [
         { name: 'Acct 1', address: '0x01' },
@@ -90,7 +98,8 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       description: 'First 5 vaults on Guardians',
       balance: '800 LYXt',
       tags: ['dApp', 'datafi', 'hashmesh'],
-      enabled: true,      txCount: 48,
+      enabled: true,
+      txCount: 48,
 
       beneficiaries: [
         { name: 'Acct 1', address: '0x01' },
@@ -307,6 +316,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         setUserStrategies,
         allStrategies,
         setAllStrategies,
+        account
       }}
     >
       <>{children}</>

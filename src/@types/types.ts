@@ -42,6 +42,13 @@ export interface IPoolItem {
   beneficiaries: { name: string; address: string }[];
 }
 
+export interface Account {
+  address: string;
+  name: string;
+  description: string;
+  balance:number
+}
+
 export interface globalStates {
   handleConnect: VoidFunciton;
   walletAddress?: string;
@@ -60,4 +67,5 @@ export interface globalStates {
   setUserStrategies: Dispatch<SetStateAction<IStrategyItem[]>>;
   allStrategies: IStrategyItem[];
   setAllStrategies: Dispatch<SetStateAction<IStrategyItem[]>>;
+  account: Account | undefined
 }
