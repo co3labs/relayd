@@ -9,15 +9,6 @@ export type ITxProgress = 'loading' | 'failed' | 'success' | '';
 export type VoidFunciton = () => void;
 export type ModalOpen = 'withdraw' | 'recharge' | null;
 
-export interface IFunctionParam {
-  name: string;
-  type: 'string' | 'uint256';
-}
-export interface IContractFunction {
-  name: string;
-  params: IFunctionParam[];
-}
-
 export type condition = '>' | '<' | '=' | '≥' | '≤' | 'all';
 export interface IStrategyCondition {
   param_name: string;
