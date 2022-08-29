@@ -1,6 +1,6 @@
 import { IStrategyItem } from '../@types/types';
 
-export default function UserStrategyItem({ strategy, index }: { strategy: IStrategyItem; index: number }) {
+export default function UserPolicyItem({ strategy, index }: { strategy: IStrategyItem; index: number }) {
   return (
     <li className="w-full" key={strategy.name}>
       <div className="block hover:bg-gray-50">

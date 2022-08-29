@@ -4,10 +4,10 @@ import { IPoolItem } from '../@types/types';
 import { classNames, GlobalContext } from '../context/GlobalState';
 import PoolListContainer from '../Components/ListContainer';
 import ListContainer from '../Components/ListContainer';
-import UserStrategyItem from './UserStrategyItem';
+import UserPolicyItem from './UserPolicyItems';
 
 
-export default function UserStrategies() {
+export default function UserPolicies() {
   const {userStrategies} = useContext(GlobalContext)
   return (
     <ListContainer>
@@ -23,7 +23,7 @@ export default function UserStrategies() {
                     'focus-visible:ring-opacity-75'
                   )}
                 > */}
-                  <UserStrategyItem strategy={strategy} index={index} />
+                  <UserPolicyItem strategy={strategy} index={index} />
                 {/* </Disclosure.Button>
                 <Disclosure.Panel className="grid grid-cols-1 md:grid-cols-2 py-4 px-12 text-sm text-gray-500">
                   <div>

@@ -1,9 +1,9 @@
 import { Tab } from '@headlessui/react';
 import { Fragment, useContext } from 'react';
 import { classNames, GlobalContext } from '../context/GlobalState';
-import AllStrategies from './AllStrategies';
+import AllPolicies from './AllPolicies';
 import CreateStrategy from './CreatePolicy';
-import UserStrategies from './UserStrategies';
+import UserPolicies from './UserPolicies';
 
 export default function Policies() {
   const { userPools, allPools } = useContext(GlobalContext);
@@ -40,10 +40,10 @@ export default function Policies() {
           <div className="overflow-scroll flex-grow max-h-full  no-scrollbar">
             <Tab.Panels>
               <Tab.Panel>
-                <UserStrategies />
+                <UserPolicies />
               </Tab.Panel>
               <Tab.Panel>
-                <AllStrategies />
+                <AllPolicies />
               </Tab.Panel>
               <Tab.Panel>
                 <CreateStrategy />
