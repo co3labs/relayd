@@ -35,10 +35,10 @@ export interface IStrategyItem {
 export interface IPoolItem {
   name: string;
   description: string;
-  address: string;
   balance: string;
   tags: string[];
   enabled: boolean;
+  txCount: number;
   beneficiaries: { name: string; address: string }[];
 }
 

@@ -10,7 +10,7 @@ export default function AllPoolsItem({ pool, index }: { pool: IPoolItem; index: 
   return (
     <li className="w-full" key={pool.name}>
       <Link
-        to={`${pool.address}`}
+        to={`${pool.name}`}
         onClick={() => {
           setCurrentPool(index);
         }}
@@ -28,7 +28,7 @@ export default function AllPoolsItem({ pool, index }: { pool: IPoolItem; index: 
           <div className="mt-2 sm:flex sm:justify-between">
             <div className="sm:flex">
               <p className="flex items-center text-sm text-gray-500">
-                {getShortId(pool.address)}
+                
                 <ArrowTopRightOnSquareIcon className="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" aria-hidden="true" />
               </p>
             </div>

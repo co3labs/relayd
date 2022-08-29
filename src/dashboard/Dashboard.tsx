@@ -53,13 +53,13 @@ export default function Dashboard() {
                     <Toggle
                       enabled={pool.enabled}
                       onClick={() => {
-                        console.log('Setting pools');
-                        const pools = [...userPools];
-                        const index = userPools.findIndex((pool) => pool.address === pool.address);
-                        const update = { ...pool, enabled: !pool.enabled };
-                        console.log(update);
-                        pools.splice(index, 1, update);
-                        setUserPools([...pools]);
+                        // console.log('Setting pools');
+                        // const pools = [...userPools];
+                        // const index = userPools.findIndex((pool) => pool.address === pool.address);
+                        // const update = { ...pool, enabled: !pool.enabled };
+                        // console.log(update);
+                        // pools.splice(index, 1, update);
+                        // setUserPools([...pools]);
                       }}
                     />
                     <span className="mt-2 text-xs text-gray-400">{pool.enabled ? '(active)' : '(inactive)'}</span>

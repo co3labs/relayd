@@ -55,13 +55,13 @@ export default function PublicPool() {
                     <Toggle
                       enabled={pool.enabled}
                       onClick={() => {
-                        console.log('Setting pools');
-                        const pools = [...userPools];
-                        const index = userPools.findIndex((pool) => pool.address === pool.address);
-                        const update = { ...pool, enabled: !pool.enabled };
-                        console.log(update);
-                        pools.splice(index, 1, update);
-                        setUserPools([...pools]);
+                        // console.log('Setting pools');
+                        // const pools = [...userPools];
+                        // const index = userPools.findIndex((pool) => pool.address === pool.address);
+                        // const update = { ...pool, enabled: !pool.enabled };
+                        // console.log(update);
+                        // pools.splice(index, 1, update);
+                        // setUserPools([...pools]);
                       }}
                     />
                     <span className="mt-2 text-xs text-gray-400">{pool.enabled ? '(active)' : '(inactive)'}</span>
@@ -113,7 +113,7 @@ export default function PublicPool() {
                     <dd className="mt-1 text-sm text-gray-900">74</dd>
                   </div>
                   <div className="sm:col-span-1">
-                    <dt className="text-sm font-medium text-gray-500">Total Gas Relayed</dt>
+                    <dt className="text-sm font-medium text-gray-500">Total Gas Funded</dt>
                     <dd className="mt-1 text-sm text-gray-900">156 LYXt</dd>
                   </div>
                 </dl>
@@ -151,6 +151,7 @@ export default function PublicPool() {
           </section>
         </div>
         <div>
+          {/*Deposit withdraw section */}
           <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1">
             <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
               <Tab.Group>
@@ -243,6 +244,8 @@ export default function PublicPool() {
               </Tab.Group>
             </div>
           </section>
+
+          {/*Policy section*/}
           <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1 mt-6">
             <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
               {' '}
@@ -258,19 +261,21 @@ export default function PublicPool() {
               <div className="flex">
                 <div className="mr-4">
                   <dt className="text-sm font-medium text-gray-400 mt-2">Rules</dt>
-                  <dd className="mt-1 text-sm text-gray-500 flex items-center hover:text-blue-400">
+                  <dd className="mt-1 text-sm text-gray-500 flex items-center ">
                     <p>amount {'>'} 1000</p>
                   </dd>
                 </div>
                 <div className="mr-2">
                   <dt className="text-sm font-medium text-gray-400 mt-2">Function</dt>
-                  <dd className="mt-1 text-sm text-gray-500 flex items-center hover:text-blue-400">
+                  <dd className="mt-1 text-sm text-gray-500 flex items-center">
                     <p>swap</p>
                   </dd>
                 </div>
               </div>
             </div>
           </section>
+
+          {/* Beneficiaries Section*/}
           <section aria-labelledby="timeline-title" className="lg:col-start-3 lg:col-span-1 mt-6">
             <div className="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
               <Tab.Group>
@@ -299,47 +304,67 @@ export default function PublicPool() {
                   </Tab>
                 </Tab.List>
                 <Tab.Panels>
-                  <div className="border border-gray-300 rounded-md flex items-center justify-between my-4">
+                  <Tab.Panel>
+                    {' '}
+                    <div className="border border-gray-300 rounded-md flex items-center justify-between my-4">
+                      <label htmlFor="beneficiary-search" className="sr-only">
+                        Search Beneficiaries
+                      </label>
+                      <input
+                        className="bg-transparent p-2 text-sm placeholder:text-gray-300 border-none focus:border-none rounded-md w-full"
+                        name="beneficiary-search"
+                        id="beneficiary-search"
+                        placeholder="search for beneficiary"
+                      />
+
+                      <MagnifyingGlassIcon className="w-4 h-4 mx-2 text-gray-400" />
+                    </div>
+                    <div className="relative mr-4">
+                      <div className="top-0 right-0 left-0 h-5 absolute bg-gradient-to-b from-white to-transparent" />
+                      <div className="mt-6 flow-root max-h-96 overflow-y-scroll ">
+                        <ul role="list" className="-mb-8">
+                          {pool.beneficiaries.map((item, itemIdx) => (
+                            <li key={item.address}>
+                              <a href={blockExplorer + item.address} target="_blank">
+                                <div className="flex space-x-3 p-2 hover:bg-gray-100 rounded-sm">
+                                  <div className="min-w-0 flex-1 pt-1.5 flex justify-around space-x-4">
+                                    <div>
+                                      <p className="text-sm text-gray-900">{item.name} </p>
+                                    </div>
+                                    <div>
+                                      <p className="font-medium text-sm  text-gray-400">{getShortId(item.address)}</p>
+                                    </div>
+                                    <ArrowTopRightOnSquareIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
+                                  </div>
+                                </div>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="bottom-0 right-0 left-0 h-5 absolute bg-gradient-to-t from-white to-transparent" />
+                    </div>
+                  </Tab.Panel>
+                  <Tab.Panel>
+                    {' '}
                     <label htmlFor="beneficiary-search" className="sr-only">
-                      Search Beneficiaries
+                      Beneficiary
                     </label>
-                    <input
-                      className="bg-transparent p-2 text-sm placeholder:text-gray-300 border-none focus:border-none rounded-md w-full"
-                      name="beneficiary-search"
-                      id="beneficiary-search"
-                      placeholder="search for beneficiary"
-                    />
-                    <MagnifyingGlassIcon className="w-4 h-4 mx-2 text-gray-400" />
-                  </div>
+                    <div className="border border-gray-300 rounded-md flex items-center justify-between my-4">
+                      <input
+                        className="bg-transparent p-2 text-sm placeholder:text-gray-300 border-none focus:border-none rounded-md w-full"
+                        name="beneficiary-search"
+                        id="beneficiary-search"
+                        placeholder="search for beneficiary"
+                      />
+                    </div>
+                    <button className="w-full py-1 text-sm font-medium hover:bg-indigo-800 bg-indigo-600 text-white mt-3 rounded">
+                      {' '}
+                      Add Beneficiary
+                    </button>
+                  </Tab.Panel>
                 </Tab.Panels>
               </Tab.Group>
-
-              {/* Activity Feed */}
-              <div className="relative mr-4">
-                <div className="top-0 right-0 left-0 h-5 absolute bg-gradient-to-b from-white to-transparent" />
-                <div className="mt-6 flow-root max-h-96 overflow-y-scroll ">
-                  <ul role="list" className="-mb-8">
-                    {pool.beneficiaries.map((item) => (
-                      <li key={item.address}>
-                        <a href={blockExplorer + item.address} target="_blank">
-                          <div className="flex space-x-3 p-2 hover:bg-gray-100 rounded-sm">
-                            <div className="min-w-0 flex-1 pt-1.5 flex justify-around space-x-4">
-                              <div>
-                                <p className="text-sm text-gray-900">{item.name} </p>
-                              </div>
-                              <div>
-                                <p className="font-medium text-sm  text-gray-400">{getShortId(item.address)}</p>
-                              </div>
-                              <ArrowTopRightOnSquareIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="bottom-0 right-0 left-0 h-5 absolute bg-gradient-to-t from-white to-transparent" />
-              </div>
             </div>
           </section>
         </div>
