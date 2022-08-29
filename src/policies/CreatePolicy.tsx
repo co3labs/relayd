@@ -39,12 +39,13 @@ export default function Createpolicy() {
   return (
     <form
       action=""
+      className="bg-gray-50 p-6 rounded-md mt-4"
       onSubmit={(e) => {
         e.preventDefault();
         //   onSubmit(e);
       }}
     >
-      <div className="p-4 rounded-md ">
+      <div className="rounded-md ">
         <fieldset className="grid grid-cols-1 lg:grid-cols-2 lg:gap-4">
           {' '}
           <legend className="sr-only">policy details</legend>
@@ -152,95 +153,99 @@ export default function Createpolicy() {
                   </div>
                 </div>
               </div>
-              <div>
+              <div className='flex flex-col'>
                 <span className="text-sm font-medium mr-12">Parameters</span>
-
-                {selectedFunction?.params.map((param: IFunctionParam, index: number) => {
-                  switch (param.type) {
-                    case 'uint256':
-                      return (
-                        <div className="px-4 grid grid-cols-3 mt-4">
-                          <label
-                            htmlFor={`param-input-${param.name}-${index}`}
-                            className={classNames(
-                              !defineRules ? 'text-gray-200' : ' text-gray-500',
-                              'block text-sm font-medium '
-                            )}
-                          >
-                            {param.name}
-                          </label>
-                          <div className="flex items-center">
-                            <label htmlFor="incentive-conditional" className="sr-only">
-                              incentive conditional
-                            </label>
-                            <select
-                              id="incentive-conditional"
-                              name="incentive-conditional"
-                              className={classNames(
-                                !defineRules ? 'text-gray-200' : 'text-gray-900',
-                                'focus:ring-indigo-500 focus:border-indigo-500  border-gray-300 h-full p-2 pr-7 mx-4',
-                                ' sm:text-sm rounded-md w-16'
-                              )}
-                            >
-                              <option selected>{'>'}</option>
-                              <option>{'<'}</option>
-                              <option>{'='}</option>
-                              <option>{'≥'}</option>
-                              <option>{'≤'}</option>
-                            </select>
-                          </div>
-                          <input
-                            type="text"
-                            placeholder="0.00"
-                            disabled={!defineRules}
-                            name={`param-input-${param.name}-${index}`}
-                            id={`param-input-${param.name}-${index}`}
-                            className={classNames(
-                              !defineRules ? 'border-gray-200 text-gray-200' : ' border-gray-300 ',
-                              'focus:ring-indigo-500 focus:border-indigo-500 block',
-                              'w-full pl-7 pr-12 sm:text-sm rounded-md disabled:cursor-not-allowed'
-                            )}
-                          />
-                        </div>
-                      );
-                    default:
-                      return (
-                        <div className="px-4 grid grid-cols-3 mt-4">
-                          <label
-                            htmlFor={`param-input-${param.name}-${index}`}
-                            className={classNames(
-                              !defineRules ? 'text-gray-200' : ' text-gray-500',
-                              'block text-sm font-medium'
-                            )}
-                          >
-                            {param.name}
-                          </label>
-                          <div className="mx-4">=</div>
-                          <input
-                            type="text"
-                            placeholder="0x0"
-                            disabled={!defineRules}
-                            name={`param-input-${param.name}-${index}`}
-                            id={`param-input-${param.name}-${index}`}
-                            className={classNames(
-                              !defineRules ? 'border-gray-200 text-gray-200' : ' border-gray-300 ',
-                              'focus:ring-indigo-500 focus:border-indigo-500 block',
-                              'w-full pl-7 pr-12 sm:text-sm rounded-md disabled:cursor-not-allowed max-w-xs'
-                            )}
-                          />
-                        </div>
-                      );
-                  }
-                })}
+                {defineRules ? (
+                  <>
+                    {selectedFunction?.params.map((param: IFunctionParam, index: number) => {
+                      switch (param.type) {
+                        case 'uint256':
+                          return (
+                            <div className="px-4 grid grid-cols-3 mt-4">
+                              <label
+                                htmlFor={`param-input-${param.name}-${index}`}
+                                className={classNames(
+                                  !defineRules ? 'text-gray-200' : ' text-gray-500',
+                                  'block text-sm font-medium '
+                                )}
+                              >
+                                {param.name}
+                              </label>
+                              <div className="flex items-center">
+                                <label htmlFor="incentive-conditional" className="sr-only">
+                                  incentive conditional
+                                </label>
+                                <select
+                                  id="incentive-conditional"
+                                  name="incentive-conditional"
+                                  className={classNames(
+                                    !defineRules ? 'text-gray-200' : 'text-gray-900',
+                                    'focus:ring-indigo-500 focus:border-indigo-500  border-gray-300 h-full p-2 pr-7 mx-4',
+                                    ' sm:text-sm rounded-md w-16'
+                                  )}
+                                >
+                                  <option selected>{'>'}</option>
+                                  <option>{'<'}</option>
+                                  <option>{'='}</option>
+                                  <option>{'≥'}</option>
+                                  <option>{'≤'}</option>
+                                </select>
+                              </div>
+                              <input
+                                type="text"
+                                placeholder="0.00"
+                                disabled={!defineRules}
+                                name={`param-input-${param.name}-${index}`}
+                                id={`param-input-${param.name}-${index}`}
+                                className={classNames(
+                                  !defineRules ? 'border-gray-200 text-gray-200' : ' border-gray-300 ',
+                                  'focus:ring-indigo-500 focus:border-indigo-500 block',
+                                  'w-full pl-7 pr-12 sm:text-sm rounded-md disabled:cursor-not-allowed'
+                                )}
+                              />
+                            </div>
+                          );
+                        default:
+                          return (
+                            <div className="px-4 grid grid-cols-3 mt-4">
+                              <label
+                                htmlFor={`param-input-${param.name}-${index}`}
+                                className={classNames(
+                                  !defineRules ? 'text-gray-200' : ' text-gray-500',
+                                  'block text-sm font-medium'
+                                )}
+                              >
+                                {param.name}
+                              </label>
+                              <div className="mx-4">=</div>
+                              <input
+                                type="text"
+                                placeholder="0x0"
+                                disabled={!defineRules}
+                                name={`param-input-${param.name}-${index}`}
+                                id={`param-input-${param.name}-${index}`}
+                                className={classNames(
+                                  !defineRules ? 'border-gray-200 text-gray-200' : ' border-gray-300 ',
+                                  'focus:ring-indigo-500 focus:border-indigo-500 block',
+                                  'w-full pl-7 pr-12 sm:text-sm rounded-md disabled:cursor-not-allowed max-w-xs'
+                                )}
+                              />
+                            </div>
+                          );
+                      }
+                    })}
+                  </>
+                ) : (
+                  <div className="text-center border-gray-400 text-gray-400 p-4 flex-grow"><p>All Transactions Incentivized</p> </div>
+                )}
               </div>
             </div>
           </div>
         </fieldset>
       </div>
-
       <div className="mt-8 w-full flex flex-col items-center">
         <div className="py-6">
-        <button
+          <button
             type="submit"
             className="py-4 px-12 text-gray-600 shadow-sm border-transparent rounded border bg-gray-100 hover:border-indigo-600 hover:bg-indigo-100 hover:text-indigo-800"
           >
