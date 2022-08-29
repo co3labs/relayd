@@ -49,6 +49,21 @@ export interface Account {
   balance:number
 }
 
+
+export interface FuncInput {
+  internalType: string;
+  name: string;
+  type: string;
+}
+
+export interface ABIFunc {
+  inputs: FuncInput[];
+  name: string;
+  outputs: [];
+  stateMutability: 'payable' | 'nonpayable' | 'view' | 'pure';
+  type: string;
+}
+
 export interface globalStates {
   handleConnect: VoidFunciton;
   walletAddress?: string;

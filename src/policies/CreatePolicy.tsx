@@ -1,7 +1,9 @@
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
-import { IContractFunction, IFunctionParam } from '../@types/types';
+import { ABIFunc, FuncInput, IContractFunction, IFunctionParam } from '../@types/types';
 import { classNames } from '../context/GlobalState';
+import { getFunctionNames, parseABI } from '../util/abi-parse-utils';
+import validator from 'is-my-json-valid';
 const steps = [
   { name: 'Specify Contract', status: 'current', href: '#', id: 1 },
   { name: 'Select Function', status: 'incomplete', href: '#', id: 2 },
@@ -35,6 +37,9 @@ const functions: IContractFunction[] = [
 export default function Createpolicy() {
   const [selectedFunction, setSelectedFunction] = useState<IContractFunction>();
   const [defineRules, setSkipParams] = useState<boolean>(false);
+  const [abi, setAbi] = useState<ABIFunc[]>();
+  const [abiInput, setAbiInput] = useState<string>();
+  const [invalidAbi, setInvalidAbi] = useState(false);
 
   return (
     <form
@@ -102,6 +107,22 @@ export default function Createpolicy() {
                 className="shadow-sm block w-full placeholder:text-gray-400 bg-white text-gray-900  focus:ring-gray-500 focus:border-gray-500 sm:text-sm border border-gray-300 rounded-md"
                 defaultValue={''}
                 placeholder="ABI / JSON Inteface"
+                value={abiInput}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setAbiInput(value);
+                  try {
+                    const parsedAbi = parseABI(value);
+                    setAbi(parsedAbi);
+                    if (value.length > 0) {
+                      const isValid = validator(parsedAbi);
+                      if (!isValid) setInvalidAbi(true);
+                    }
+                    if (invalidAbi) setInvalidAbi(false);
+                  } catch (error) {
+                    setInvalidAbi(true);
+                  }
+                }}
               />
             </div>
           </div>
@@ -122,12 +143,14 @@ export default function Createpolicy() {
                     }}
                     className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md "
                   >
-                    <option selected disabled>
+                    <option selected={invalidAbi} disabled>
                       Select a Function
                     </option>
-                    {functions.map(({ name }, index) => (
-                      <option value={index}>{name}</option>
-                    ))}
+                    {!abi ? (
+                      <></>
+                    ) : (
+                      getFunctionNames(abi).map((name, index) => <option value={index}>{name}</option>)
+                    )}
                   </select>
                 </div>
                 <div className="flex flex-col  text-gray-900 mt-6 lg:mt-0 max-w-[15rem]">
@@ -153,7 +176,7 @@ export default function Createpolicy() {
                   </div>
                 </div>
               </div>
-              <div className='flex flex-col'>
+              <div className="flex flex-col">
                 <span className="text-sm font-medium mr-12">Parameters</span>
                 {defineRules ? (
                   <>
@@ -236,7 +259,9 @@ export default function Createpolicy() {
                     })}
                   </>
                 ) : (
-                  <div className="text-center border-gray-400 text-gray-400 p-4 flex-grow"><p>All Transactions Incentivized</p> </div>
+                  <div className="text-center border-gray-400 text-gray-400 p-4 flex-grow">
+                    <p>All Transactions Incentivized</p>{' '}
+                  </div>
                 )}
               </div>
             </div>
