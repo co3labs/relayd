@@ -13,9 +13,8 @@ import { Link } from 'react-router-dom';
 import Toggle from '../Components/Toggle';
 import { API_URL, blockExplorer, classNames, getShortId, GlobalContext } from '../context/GlobalState';
 import axios from 'axios';
-
-export default function Pool() {
-  const { currentPool, userPools, web3 } = useContext(GlobalContext);
+export default function PublicPool() {
+  const { currentPool, userPools, setUserPools, allPools, web3 } = useContext(GlobalContext);
   if (!currentPool) return <></>;
   const pool = userPools[currentPool];
   const [active, setActive] = useState(pool.enabled);
@@ -47,8 +46,7 @@ export default function Pool() {
     const isActive = pool.enabled;
     setActive(!isActive);
     axios.put(API_URL + 'pool', { ...pool, active: !isActive }).catch(() => {
-      alert(`'Failed to ${isActive ? 'Deactivate' : 'Activate'} pool`);
-      setActive(!isActive)
+      alert('Failed to ' + isActive ? 'Deactivate' : 'Activate' + ' pool');
     });
   }
 

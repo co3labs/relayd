@@ -1,20 +1,32 @@
 import { Tab } from '@headlessui/react';
 import { HandRaisedIcon } from '@heroicons/react/24/outline';
-import { Fragment, useContext } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { IPoolItem } from '../@types/types';
-import { classNames, GlobalContext } from '../context/GlobalState';
+import { API_URL, classNames, GlobalContext } from '../context/GlobalState';
 import AllPools from './AllPools';
 import CreatePoolForm from './CreatePoolForm';
 import UserPools from './UserPools';
+import axios from 'axios';
 
 export default function Pools() {
-  const { userPools, allPools } = useContext(GlobalContext);
+  const { userPools, allPools, setAllPools } = useContext(GlobalContext);
   const tabs = ['My Pools', 'All Pools', 'Create a New Pool'];
+  const [tab, setTab] = useState(0);
+
+  async function getAllPools() {
+    const { data: {data} } = await axios.get(API_URL + 'pool');
+    setAllPools(data)
+  }
+
+  useEffect(() => {
+    getAllPools();
+  }, []);
+
   return (
     <>
       <div className="px-6 pt-6 flex flex-col max-h-full">
-        <Tab.Group>
+        <Tab.Group selectedIndex={tab} onChange={setTab}>
           <Tab.List className="pb-3 flex relative w-full first:rounded-l-full last:rounded-r-full">
             {tabs.map((tab) => (
               <Tab as={Fragment}>
@@ -49,7 +61,7 @@ export default function Pools() {
                 <AllPools />
               </Tab.Panel>
               <Tab.Panel>
-                <CreatePoolForm />
+                <CreatePoolForm setTab={setTab} />
               </Tab.Panel>
             </Tab.Panels>
           </div>

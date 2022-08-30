@@ -10,7 +10,7 @@ export default function AllPools() {
   const {allPools} = useContext(GlobalContext)
   return (
     <PoolListContainer>
-      {allPools.map((pool, index) => (
+      {allPools?.map((pool, index) => (
         <>
           {/* <Disclosure>
             {({ open }) => (

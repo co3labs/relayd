@@ -1,9 +1,9 @@
 import { GlobeAltIcon, TrashIcon, XCircleIcon } from '@heroicons/react/24/outline';
-import { useContext, useState } from 'react';
+import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_URL, classNames, GlobalContext } from '../context/GlobalState';
 import axios from 'axios';
-export default function CreatePoolForm() {
+export default function CreatePoolForm({ setTab }: { setTab: Dispatch<SetStateAction<number>> }) {
   const strategies = ['No Policy', 'Strategy A', 'Strategy B', 'Strategy C'];
   const [selectedStrategy, setSelectedStrategy] = useState(strategies[0]);
   const { walletAddress, accountAddress } = useContext(GlobalContext);
@@ -39,7 +39,6 @@ export default function CreatePoolForm() {
 
   const RedAstrisq = () => <span className="text-red-400 ml-[2px]">*</span>;
 
-  const navigate = useNavigate();
   async function handleSubmit(e: any) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
@@ -57,11 +56,11 @@ export default function CreatePoolForm() {
         accountAddress,
       });
 
-      alert("Pool Succesfully Created")
+      setTab(0)
+      alert('Pool Succesfully Created');
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-
   }
 
   return (

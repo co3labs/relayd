@@ -21,7 +21,7 @@ export default function AllPoolsItem({ pool, index }: { pool: IPoolItem; index: 
             <p className="text-sm font-medium text-indigo-600 truncate">{pool.name}</p>
             <div className="sm:flex">
               <div className="flex items-center text-sm text-gray-500 mt-2">
-                {pool.tags.map((tag, index) => {
+                {pool.tags?.map((tag, index) => {
                   let color;
 
                   switch (index) {
