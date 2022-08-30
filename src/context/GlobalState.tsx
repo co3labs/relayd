@@ -228,7 +228,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       const {
         data: { data },
       } = await axios.get(API_URL + 'pool/account/' + accountAddress);
-      setUserPools([ ...data ]);
+      setUserPools([...data]);
       console.log(data);
       if (current) {
         const currentPoolUpdate = data.find((pool: IPoolItem) => pool.id === id);
@@ -276,8 +276,9 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
           return data;
         })
         .then(async (data) => {
-          const balance = await web3?.eth.getBalance(data.wallet);
+          const balance = web3?.utils.fromWei(await web3?.eth.getBalance(data.wallet));
           console.log('Account balance: ', balance);
+          console.log('Setting current account: ', { ...data, unallocated: balance });
           setAccount({ ...data, unallocated: balance });
         });
     }

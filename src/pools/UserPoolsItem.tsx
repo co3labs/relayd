@@ -11,7 +11,7 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
   const navigate = useNavigate();
   return (
     <li className="w-full" key={pool.name + '_' + index}>
-      <button
+      <div
         onClick={(e) => {
           //@ts-ignore
           console.log(e.target);
@@ -86,7 +86,7 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
             </div>
           </div>
         </div>
-      </button>
+      </div>
     </li>
   );
 }

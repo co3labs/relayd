@@ -9,6 +9,8 @@ export default function Recharge() {
   const { modalOpen, setModalOpen, account } = useContext(GlobalContext);
   const [selectedAddress, setSelectedAddress] = useState('');
   const [userCopied, setUserCopied] = useState(false);
+  const [userClicked, setUserClicked] = useState(false);
+  const [input, setInput] = useState('');
   const tabs = ['Fiat', 'Crypto'];
   const pools = [
     { name: 'Pool A', address: '0x01' },
@@ -225,14 +227,21 @@ export default function Recharge() {
             </label>
             <div className="relative rounded-md shadow-sm">
               <input
-                type="text"
+                type="number"
                 name="recharge-lukso-amt"
                 id="recharge-lukso-amt"
                 className="text-gray-800 focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-md bg-transparent focus:z-10 sm:text-sm border-gray-300"
                 placeholder="0.00"
                 aria-describedby="price-currency"
+                onChange={(e) => {
+                  setInput(e.target.value);
+                  if(userClicked){
+                    setUserClicked(false)
+                  }
+                }}
+                value={input}
               />
-              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              <div className="absolute inset-y-0 right-0 pr-7 flex items-center pointer-events-none">
                 <span className="text-gray-500 sm:text-sm" id="price-currency">
                   LYXt
                 </span>
@@ -244,26 +253,44 @@ export default function Recharge() {
             <button
               className="flex items-center"
               onClick={() => {
-                if (account?.address) navigator.clipboard.writeText(account?.address);
+                console.log('Current Account: ', account);
+                if (account?.wallet) navigator.clipboard.writeText(account?.wallet);
                 setUserCopied(true);
                 setTimeout(() => {
                   setUserCopied(false);
                 }, 1000);
               }}
             >
-              <p className="text-sm mr-2">{account?.address}</p>
+              <p className="text-sm mr-2">{account?.wallet}</p>
               {userCopied ? <CheckIcon className="text-green-500 w-4 h-4" /> : <ClipboardIcon className="w-4 h-4" />}
             </button>
           </div>
           <p className="text-gray-400 font-light">
             Send funds the specified amount of funds to this address then click the button below.
           </p>
-          <button
-            className="text-sm font-medium mt-6 text-gray-400 hover:text-indigo-600 w-full py-1 rounded-md bg-transparent border border-gray-400 hover:border-indigo-400 hover:bg-indigo-100"
-            type="submit"
-          >
-            Funds have been sent
-          </button>
+          <div className="flex flex-col">
+            <button
+              disabled={!input}
+              onClick={() => {
+                console.log("User Clicked");
+                
+                setUserClicked(true);
+              }}
+              className={classNames(
+                input ? 'hover:border-indigo-400 hover:bg-indigo-100 hover:text-indigo-600 ' : 'cursor-not-allowed',
+                'w-full py-1 rounded-md bg-transparent border border-gray-400 ',
+                'text-sm font-medium text-gray-400'
+              )}
+              type="submit"
+            >
+              Funds have been sent
+            </button>
+            <div
+              className={classNames(userClicked ? 'block' : 'hidden', 'text-sm font-medium text-green-500')}
+            >
+              <p>Your balance will update when the transaction confirms.</p>
+            </div>
+          </div>
         </form>
         {/* </Tab.Panel>
           </Tab.Panels>

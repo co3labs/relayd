@@ -41,6 +41,7 @@ export interface IPoolItem {
 
 export interface Account {
   address: string;
+  wallet:string;
   unallocated: number;
   allocated: number;
 }
