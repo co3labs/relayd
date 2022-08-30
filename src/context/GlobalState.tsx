@@ -228,8 +228,8 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
       const {
         data: { data },
       } = await axios.get(API_URL + 'pool/account/' + accountAddress);
-      setUserPools({ ...data });
-
+      setUserPools([ ...data ]);
+      console.log(data);
       if (current) {
         const currentPoolUpdate = data.find((pool: IPoolItem) => pool.id === id);
         setCurrentPool({ ...currentPoolUpdate });
@@ -239,11 +239,12 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
     }
   }
 
-    async function editActiveState(setOptimistic: Dispatch<SetStateAction<boolean>>) {
-    const isActive = currentPool?.active;
+  async function editActiveState(setOptimistic: Dispatch<SetStateAction<boolean>>, current?: IPoolItem) {
+    const pool = current || currentPool;
+    const isActive = pool?.active;
     setOptimistic(!isActive);
 
-    const newPool = { ...currentPool, active: !isActive, policy: currentPool?._policy };
+    const newPool = { ...pool, active: !isActive, policy: pool?._policy };
     console.log('Pool After Update:', newPool);
     axios
       .put(API_URL + 'pool', newPool)
@@ -252,7 +253,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         setOptimistic(!!isActive);
       })
       .then(() => {
-        updateUserPools(true, currentPool?.id);
+        updateUserPools(true, pool?.id);
       });
   }
 
@@ -306,7 +307,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         accountAddress,
         setAccountAddress,
         updateUserPools,
-        editActiveState
+        editActiveState,
       }}
     >
       <>{children}</>

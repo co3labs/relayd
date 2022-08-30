@@ -3,7 +3,7 @@ import { classNames } from '../context/GlobalState';
 
 export default function Toggle({ onClick, enabled }: { onClick: () => any; enabled: boolean }) {
   return (
-    <button onClick={onClick} className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+    <button id="toggle_active" onClick={onClick} className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
       <div
         className={classNames(
           enabled ? 'bg-green-300' : 'bg-red-400',

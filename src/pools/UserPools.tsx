@@ -16,7 +16,7 @@ export default function UserPools() {
         </div>
       ) : (
         <PoolListContainer>
-          {userPools.map((pool, index) => (
+          {userPools?.map((pool, index) => (
             <>
               {/* <Disclosure>
             {({ open }) => (

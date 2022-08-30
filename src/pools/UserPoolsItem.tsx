@@ -1,6 +1,6 @@
 import { ArrowTopRightOnSquareIcon, Bars2Icon } from '@heroicons/react/24/outline';
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IPoolItem } from '../@types/types';
 import Toggle from '../Components/Toggle';
 import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
@@ -8,21 +8,25 @@ import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index: number }) {
   const { setCurrentPool, userPools, setUserPools, editActiveState } = useContext(GlobalContext);
   const [active, setActive] = useState(pool.active);
-
+  const navigate = useNavigate();
   return (
     <li className="w-full" key={pool.name + '_' + index}>
-      <Link
-        to={`${pool.name}`}
-        onClick={() => {
-          setCurrentPool(pool);
+      <button
+        onClick={(e) => {
+          //@ts-ignore
+          console.log(e.target);
+          // if (e.target.id !== 'toggle_active') {
+          //   // setCurrentPool(pool);
+          // navigate(`${pool.name}`)
+          // }
         }}
-        className="block hover:bg-gray-50"
+        className="block hover:bg-gray-50 w-full"
       >
         <div className="px-4 py-4 sm:px-6 grid grid-cols-3">
           <div className="">
-            <p className="text-sm font-medium text-indigo-600 truncate">{pool.name}</p>
+            <p className="text-sm w-min font-medium text-indigo-600 truncate">{pool.name}</p>
             <div className="sm:flex">
-              <div className="flex items-center text-sm text-gray-500 mt-2">
+              <div className="flex  items-center text-sm text-gray-500 mt-2">
                 {pool.tags?.map((tag, index) => {
                   let color;
 
@@ -55,7 +59,7 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
               </div>
             </div>
           </div>
-          <div className="font-medium text-sm text-gray-500 flex flex-col items-center h-full justify-center">
+          <div className="font-medium text-left text-sm text-gray-500 flex flex-col items-center h-full justify-center">
             <div>
               <p>
                 <span className="text-green-600">{pool.beneficiaries.length}</span> beneficiaries
@@ -76,13 +80,13 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
               <Toggle
                 enabled={active}
                 onClick={() => {
-                  editActiveState(setActive);
+                  editActiveState(setActive, pool);
                 }}
               />
             </div>
           </div>
         </div>
-      </Link>
+      </button>
     </li>
   );
 }

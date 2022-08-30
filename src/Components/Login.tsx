@@ -63,7 +63,7 @@ export default function Login() {
               className="space-y-6"
               onSubmit={async (e) => {
                 e.preventDefault();
-                if (canLogin) navigate('/account/pools', { replace: true });
+                if (canLogin) navigate('/account/pools', { replace: false });
               }}
             >
               <div>
