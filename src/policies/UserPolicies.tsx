@@ -23,7 +23,7 @@ export default function UserPolicies() {
                     'focus-visible:ring-opacity-75'
                   )}
                 > */}
-                  <UserPolicyItem strategy={strategy} index={index} />
+                  <UserPolicyItem policy={strategy} index={index} />
                 {/* </Disclosure.Button>
                 <Disclosure.Panel className="grid grid-cols-1 md:grid-cols-2 py-4 px-12 text-sm text-gray-500">
                   <div>

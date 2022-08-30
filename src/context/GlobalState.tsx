@@ -39,51 +39,20 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
   const [web3, setWeb3] = useState<Web3>();
   const [unsupportedNet, setUnsupportedNet] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<ModalOpen>(null);
-  const [account, setAccount] = useState<Account>();
+  const [account, setAccount] = useState<Account>({
+    address: '',
+    allocated: 0,
+    unallocated: 0,
+    wallet: '',
+  });
 
   const [userPools, setUserPools] = useState<IPoolItem[]>([]);
   const [allPools, setAllPools] = useState<IPoolItem[]>([]);
   const [currentPool, setCurrentPool] = useState<IPoolItem | null>(null);
   // const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
-  const strategies: IPolicyItem[] = [
-    {
-      abi: '[a long abi]',
-      conditions: [{ param_name: 'amount', condition: '>', value: '' }],
-      contract_name: 'KEF1192',
-      policy_name: '1K Transaction',
-      description: 'Incentivizes transactions over 1K in value.',
-    },
-    {
-      abi: '[a long abi]',
-      conditions: [{ param_name: 'amount', condition: '>', value: '' }],
-      contract_name: 'KEF1192',
-      policy_name: '1K Transaction',
-      description: 'Incentivizes transactions over 1K in value.',
-    },
-    {
-      abi: '[a long abi]',
-      conditions: [{ param_name: 'amount', condition: '>', value: '' }],
-      contract_name: 'KEF1192',
-      policy_name: '1K Transaction',
-      description: 'Incentivizes transactions over 1K in value.',
-    },
-    {
-      abi: '[a long abi]',
-      conditions: [{ param_name: 'amount', condition: '>', value: '' }],
-      contract_name: 'KEF1192',
-      policy_name: '1K Transaction',
-      description: 'Incentivizes transactions over 1K in value.',
-    },
-  ];
-
-  const [userPolicies, setUserPolicies] = useState<IPolicyItem[]>(strategies);
-  const [allPolicies, setAllPolicies] = useState<IPolicyItem[]>([
-    ...strategies,
-    ...strategies,
-    ...strategies,
-    ...strategies,
-  ]);
+  const [userPolicies, setUserPolicies] = useState<IPolicyItem[]>([]);
+  const [allPolicies, setAllPolicies] = useState<IPolicyItem[]>([]);
 
   // intitialize web3modal to use to connect to provider
   useEffect(() => {
@@ -265,7 +234,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
 
   useEffect(() => {
     console.log('Getting account data:', accountAddress && !account);
-    if (accountAddress && !account) {
+    if (accountAddress) {
       // const {data} useQuery
       axios
         .get(API_URL + 'account/' + accountAddress)
@@ -276,13 +245,19 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
           return data;
         })
         .then(async (data) => {
+          const {
+            data: {
+              data: { sum },
+            },
+          } = await axios.get(API_URL + 'pool/account/balance/' + data.address);
           const balance = web3?.utils.fromWei(await web3?.eth.getBalance(data.wallet));
-          console.log('Account balance: ', balance);
-          console.log('Setting current account: ', { ...data, unallocated: balance });
-          setAccount({ ...data, unallocated: balance });
+          const unallocated = Number(balance) - Number(sum);
+          console.log('Account balance: ', sum, unallocated);
+          console.log('Setting current account: ', { ...data, unallocated, allocated: sum });
+          setAccount({ ...data, unallocated, allocated: sum });
         });
     }
-  }, [accountAddress]);
+  }, [accountAddress, currentPool?.balance]);
 
   return (
     <GlobalContext.Provider
@@ -309,6 +284,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         setAccountAddress,
         updateUserPools,
         editActiveState,
+        setAccount,
       }}
     >
       <>{children}</>

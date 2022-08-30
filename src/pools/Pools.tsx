@@ -10,7 +10,8 @@ import UserPools from './UserPools';
 import axios from 'axios';
 
 export default function Pools() {
-  const { userPools, allPools, setAllPools, setUserPools, accountAddress } = useContext(GlobalContext);
+  const { userPools, allPools, setAllPools, setUserPools, accountAddress, setAccount, account } =
+    useContext(GlobalContext);
   const tabs = ['My Pools', 'All Pools', 'Create a New Pool'];
   const [tab, setTab] = useState(0);
 
@@ -18,7 +19,15 @@ export default function Pools() {
     const {
       data: { data },
     } = await axios.get(API_URL + 'pool');
+
     setAllPools(data);
+
+    let sum = 0;
+    data.forEach((item: IPoolItem) => {
+      sum += item.balance;
+    });
+
+    setAccount({ ...account,  allocated: account.unallocated - sum });
   }
 
   async function getUserPools() {

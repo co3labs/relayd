@@ -16,11 +16,22 @@ export interface IPolicyCondition {
   value: string;
 }
 export interface IPolicyItem {
-  policy_name: string;
+  id: string;
+  name: string;
   description: string;
-  abi: string;
-  conditions: IPolicyCondition[];
-  contract_name: string;
+  selector: string;
+  param1: string;
+  value1: string;
+  condition1: string;
+  param2: string;
+  value2: string;
+  condition2: string;
+  param3: string;
+  value3: string;
+  condition3: string;
+  created_by: string;
+  created_on: string;
+  last_modified_on: string;
 }
 
 export interface IPoolItem {
@@ -36,12 +47,19 @@ export interface IPoolItem {
   last_modified_on: string;
   target: string;
   beneficiaries: string[];
-  _policy: string;
+  _policy: IPolicyItem;
+}
+
+export interface IPoolTx {
+  id: string;
+  amount: number;
+  sender: string;
+  date: string;
 }
 
 export interface Account {
   address: string;
-  wallet:string;
+  wallet: string;
   unallocated: number;
   allocated: number;
 }
@@ -80,7 +98,9 @@ export interface globalStates {
   setUserPolicies: Dispatch<SetStateAction<IPolicyItem[]>>;
   allPolicies: IPolicyItem[];
   setAllPolicies: Dispatch<SetStateAction<IPolicyItem[]>>;
-  account?: Account;
+  account: Account;
+  setAccount: Dispatch<SetStateAction<Account>>;
   updateUserPools: (current: boolean, id?: number) => Promise<void>;
+
   editActiveState: (setOptimistic: Dispatch<SetStateAction<boolean>>, current?: IPoolItem) => Promise<void>;
 }
