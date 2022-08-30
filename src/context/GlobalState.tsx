@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { createContext, Dispatch, PropsWithChildren, SetStateAction, useEffect, useRef, useState } from 'react';
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
@@ -239,6 +239,23 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
     }
   }
 
+    async function editActiveState(setOptimistic: Dispatch<SetStateAction<boolean>>) {
+    const isActive = currentPool?.active;
+    setOptimistic(!isActive);
+
+    const newPool = { ...currentPool, active: !isActive, policy: currentPool?._policy };
+    console.log('Pool After Update:', newPool);
+    axios
+      .put(API_URL + 'pool', newPool)
+      .catch(() => {
+        alert(`'Failed to ${isActive ? 'Deactivate' : 'Activate'} pool`);
+        setOptimistic(!!isActive);
+      })
+      .then(() => {
+        updateUserPools(true, currentPool?.id);
+      });
+  }
+
   useEffect(() => {
     if (chainId !== process.env.CHAIN_ID) {
       switchNetwork();
@@ -288,7 +305,8 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         account,
         accountAddress,
         setAccountAddress,
-        updateUserPools
+        updateUserPools,
+        editActiveState
       }}
     >
       <>{children}</>

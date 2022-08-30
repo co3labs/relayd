@@ -7,7 +7,6 @@ import {
   PaperClipIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { spawn } from 'child_process';
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Toggle from '../Components/Toggle';
@@ -15,7 +14,7 @@ import { API_URL, blockExplorer, classNames, getShortId, GlobalContext } from '.
 import axios from 'axios';
 
 export default function Pool() {
-  const { currentPool, updateUserPools, web3 } = useContext(GlobalContext);
+  const { currentPool, updateUserPools, web3, editActiveState } = useContext(GlobalContext);
   if (!currentPool) return <></>;
   const [active, setActive] = useState(currentPool.active);
 
@@ -37,23 +36,6 @@ export default function Pool() {
         })
         .catch(console.error);
     }
-  }
-
-  async function handleEditActiveState() {
-    const isActive = currentPool?.active;
-    setActive(!isActive);
-
-    const newPool = { ...currentPool, active: !isActive, policy: currentPool?._policy };
-    console.log('Pool After Update:', newPool);
-    axios
-      .put(API_URL + 'pool', newPool)
-      .catch(() => {
-        alert(`'Failed to ${isActive ? 'Deactivate' : 'Activate'} pool`);
-        setActive(!!isActive);
-      })
-      .then(() => {
-        updateUserPools(true, currentPool?.id);
-      });
   }
 
   async function handleBalanceChange(e: any) {
@@ -87,7 +69,12 @@ export default function Pool() {
                 </div>
                 <div className="flex items-center">
                   <div className="flex flex-col justify-end items-end mr-2">
-                    <Toggle enabled={active} onClick={handleEditActiveState} />
+                    <Toggle
+                      enabled={active}
+                      onClick={() => {
+                        editActiveState(setActive);
+                      }}
+                    />
                     <span className="mt-2 text-xs text-gray-400">{currentPool.active ? '(active)' : '(inactive)'}</span>
                   </div>
                 </div>

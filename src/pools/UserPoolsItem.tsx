@@ -6,7 +6,9 @@ import Toggle from '../Components/Toggle';
 import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 
 export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index: number }) {
-  const { setCurrentPool, userPools, setUserPools } = useContext(GlobalContext);
+  const { setCurrentPool, userPools, setUserPools, editActiveState } = useContext(GlobalContext);
+  const [active, setActive] = useState(pool.active);
+
   return (
     <li className="w-full" key={pool.name + '_' + index}>
       <Link
@@ -59,7 +61,7 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
                 <span className="text-green-600">{pool.beneficiaries.length}</span> beneficiaries
               </p>
               <p>
-                <span className="text-green-600">{"pool.txCount"}</span> transactions
+                <span className="text-green-600">{'pool.txCount'}</span> transactions
               </p>
             </div>
           </div>
@@ -72,11 +74,9 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
             </div>
             <div className="mt-2">
               <Toggle
-                enabled={pool.active}
+                enabled={active}
                 onClick={() => {
-                  const pools = [...userPools];
-                  const update = { ...pool, enabled: !pool.active };
-                  pools.splice(index, 1, update);
+                  editActiveState(setActive);
                 }}
               />
             </div>

@@ -81,4 +81,5 @@ export interface globalStates {
   setAllPolicies: Dispatch<SetStateAction<IPolicyItem[]>>;
   account?: Account;
   updateUserPools: (current: boolean, id?: number) => Promise<void>;
+  editActiveState: (setOptimistic: Dispatch<SetStateAction<boolean>>) => Promise<void>;
 }
