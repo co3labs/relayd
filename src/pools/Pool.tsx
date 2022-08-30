@@ -15,19 +15,15 @@ import { API_URL, blockExplorer, classNames, getShortId, GlobalContext } from '.
 import axios from 'axios';
 
 export default function Pool() {
-  const { currentPool, userPools, web3 } = useContext(GlobalContext);
+  const { currentPool, updateUserPools, web3 } = useContext(GlobalContext);
   if (!currentPool) return <></>;
-  const pool = userPools[currentPool];
-  const [active, setActive] = useState(pool.enabled);
-  const transactions = [
-    { id: '0x012', amount: 0.02432, date: Date.now(), sender: '0x0' },
-    { id: '0x023', amount: 0.06332, date: Date.now() - 100000, sender: '0x0' },
-    { id: '0x034', amount: 0.02453, date: Date.now() - 200000, sender: '0x0' },
-    { id: '0x054', amount: 0.94533, date: Date.now() - 300000, sender: '0x0' },
-    { id: '0x054', amount: 0.12345, date: Date.now() - 400000, sender: '0x0' },
-    { id: '0x054', amount: 0.45246, date: Date.now() - 500000, sender: '0x0' },
-    { id: '0x054', amount: 0.23456, date: Date.now() - 600000, sender: '0x0' },
-  ];
+  const [active, setActive] = useState(currentPool.active);
+
+  async function getTransactions() {
+    // const {data: {data}} = axios.get
+  }
+
+  console.log('Current Pool: ', currentPool);
 
   async function handleAddBeneficiary(e: any) {
     e.preventDefault();
@@ -35,7 +31,7 @@ export default function Pool() {
     const { beneficiary } = Object.fromEntries(formData);
     if (currentPool && web3?.utils.isAddress(beneficiary as string)) {
       axios
-        .put(API_URL + 'pool', { ...pool, beneficiaries: [e.target.value, ...pool.beneficiaries] })
+        .put(API_URL + 'pool', { ...currentPool, beneficiaries: [e.target.value, ...currentPool.beneficiaries] })
         .then(() => {
           alert('Beneficiary Sucessfully Added');
         })
@@ -44,19 +40,27 @@ export default function Pool() {
   }
 
   async function handleEditActiveState() {
-    const isActive = pool.enabled;
+    const isActive = currentPool?.active;
     setActive(!isActive);
-    axios.put(API_URL + 'pool', { ...pool, active: !isActive }).catch(() => {
-      alert(`'Failed to ${isActive ? 'Deactivate' : 'Activate'} pool`);
-      setActive(!isActive)
-    });
+
+    const newPool = { ...currentPool, active: !isActive, policy: currentPool?._policy };
+    console.log('Pool After Update:', newPool);
+    axios
+      .put(API_URL + 'pool', newPool)
+      .catch(() => {
+        alert(`'Failed to ${isActive ? 'Deactivate' : 'Activate'} pool`);
+        setActive(!!isActive);
+      })
+      .then(() => {
+        updateUserPools(true, currentPool?.id);
+      });
   }
 
   async function handleBalanceChange(e: any) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const { balance } = Object.fromEntries(formData);
-    axios.put(API_URL + 'pool', { ...pool, balance: balance }).catch();
+    axios.put(API_URL + 'pool', { ...currentPool, balance: balance }).catch();
   }
 
   return (
@@ -77,19 +81,19 @@ export default function Pool() {
               <div className="w-full px-4 py-5 sm:px-6 flex justify-between border-b border-gray-200 ">
                 <div className="">
                   <h2 id="applicant-information-title" className="text-lg leading-6 font-medium text-gray-900">
-                    {pool.name}
+                    {currentPool.name}
                   </h2>
-                  <p className="mt-1 max-w-2xl text-sm text-gray-500">{pool.description}</p>
+                  <p className="mt-1 max-w-2xl text-sm text-gray-500">{currentPool.description}</p>
                 </div>
                 <div className="flex items-center">
                   <div className="flex flex-col justify-end items-end mr-2">
                     <Toggle enabled={active} onClick={handleEditActiveState} />
-                    <span className="mt-2 text-xs text-gray-400">{pool.enabled ? '(active)' : '(inactive)'}</span>
+                    <span className="mt-2 text-xs text-gray-400">{currentPool.active ? '(active)' : '(inactive)'}</span>
                   </div>
                 </div>
               </div>
               <div className="m-4">
-                {pool.tags.map((tag, index) => {
+                {currentPool.tags?.map((tag, index) => {
                   let color;
 
                   switch (index) {
@@ -122,11 +126,11 @@ export default function Pool() {
                 <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                   <div className="sm:col-span-1">
                     <dt className="text-sm font-medium text-gray-500">Balance</dt>
-                    <dd className="mt-1 text-sm text-gray-900">{pool.balance}</dd>
+                    <dd className="mt-1 text-sm text-gray-900">{currentPool.balance}</dd>
                   </div>
                   <div className="sm:col-span-1">
                     <dt className="text-sm font-medium text-gray-500">Beneficiaries</dt>
-                    <dd className="mt-1 text-sm text-gray-900">{pool.beneficiaries.length}</dd>
+                    <dd className="mt-1 text-sm text-gray-900">{currentPool.beneficiaries.length}</dd>
                   </div>
                   <div className="sm:col-span-1">
                     <dt className="text-sm font-medium text-gray-500">Transactions</dt>
@@ -157,14 +161,14 @@ export default function Pool() {
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.map((item, index) => (
+                  {/* {transactions.map((item, index) => (
                     <tr key={item.id} className={classNames('even:bg-gray-100 text-gray-400 hover:text-gray-900')}>
                       <td className="py-2">{item.id}</td>
                       <td className="py-2 flex items-center">{item.amount}</td>
                       <td className="py-2">{item.sender}</td>
                       <td className="py-2">{item.date}</td>
                     </tr>
-                  ))}
+                  ))} */}
                 </tbody>
               </table>
             </div>
@@ -309,7 +313,8 @@ export default function Pool() {
                     }
                   >
                     <h2 id="timeline-title" className="font-medium text-gray-900">
-                      Beneficiaries <span className="text-sm text-gray-400">{`(${pool.beneficiaries.length})`}</span>
+                      Beneficiaries{' '}
+                      <span className="text-sm text-gray-400">{`(${currentPool.beneficiaries.length})`}</span>
                     </h2>
                   </Tab>
                   <Tab
@@ -343,13 +348,13 @@ export default function Pool() {
                       <div className="top-0 right-0 left-0 h-5 absolute bg-gradient-to-b from-white to-transparent" />
                       <div className="mt-6 flow-root max-h-96 overflow-y-scroll ">
                         <ul role="list" className="-mb-8">
-                          {pool.beneficiaries.map((item, itemIdx) => (
-                            <li key={item.address}>
-                              <a href={blockExplorer + item.address} target="_blank">
+                          {currentPool.beneficiaries.map((item, itemIdx) => (
+                            <li key={item}>
+                              <a href={blockExplorer + item} target="_blank">
                                 <div className="flex space-x-3 p-2 hover:bg-gray-100 rounded-sm">
                                   <div className="min-w-0 flex-1 pt-1.5 flex justify-around space-x-4">
                                     <div>
-                                      <p className="font-medium text-sm  text-gray-400">{getShortId(item.address)}</p>
+                                      <p className="font-medium text-sm  text-gray-400">{getShortId(item)}</p>
                                     </div>
                                     <ArrowTopRightOnSquareIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
                                   </div>

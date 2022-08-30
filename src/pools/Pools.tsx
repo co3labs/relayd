@@ -10,28 +10,42 @@ import UserPools from './UserPools';
 import axios from 'axios';
 
 export default function Pools() {
-  const { userPools, allPools, setAllPools } = useContext(GlobalContext);
+  const { userPools, allPools, setAllPools, setUserPools, accountAddress } = useContext(GlobalContext);
   const tabs = ['My Pools', 'All Pools', 'Create a New Pool'];
   const [tab, setTab] = useState(0);
 
   async function getAllPools() {
-    const { data: {data} } = await axios.get(API_URL + 'pool');
-    setAllPools(data)
+    const {
+      data: { data },
+    } = await axios.get(API_URL + 'pool');
+    setAllPools(data);
+  }
+
+  async function getUserPools() {
+    const {
+      data: { data },
+    } = await axios.get(API_URL + 'pool/account/' + accountAddress);
+    setUserPools(data);
   }
 
   useEffect(() => {
-    getAllPools();
-  }, []);
+    try {
+      if (tab === 1 && allPools.length === 0) getAllPools();
+      if (tab === 0 && userPools.length === 0) getUserPools();
+    } catch (error) {
+      console.error(error);
+    }
+  }, [tab]);
 
   return (
     <>
       <div className="px-6 pt-6 flex flex-col max-h-full">
         <Tab.Group selectedIndex={tab} onChange={setTab}>
           <Tab.List className="pb-3 flex relative w-full first:rounded-l-full last:rounded-r-full">
-            {tabs.map((tab) => (
+            {tabs.map((tab, index) => (
               <Tab as={Fragment}>
                 {({ selected }) => (
-                  <div className="relative">
+                  <div key={'pool_tab_' + index} className="relative">
                     <div
                       className={classNames(
                         selected ? 'bg-indigo-600' : 'bg-gray-200',

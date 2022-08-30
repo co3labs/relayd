@@ -12,7 +12,7 @@ export default function AllPoolsItem({ pool, index }: { pool: IPoolItem; index: 
       <Link
         to={`${pool.name}`}
         onClick={() => {
-          setCurrentPool(index);
+          setCurrentPool(pool);
         }}
         className="block hover:bg-gray-50"
       >
@@ -58,7 +58,7 @@ export default function AllPoolsItem({ pool, index }: { pool: IPoolItem; index: 
                 <span className="text-green-600">{pool.beneficiaries.length}</span> beneficiaries
               </p>
               <p>
-                <span className="text-green-600">{pool.txCount}</span> transactions
+                <span className="text-green-600">{"pool.txCount"}</span> transactions
               </p>
             </div>
           </div>

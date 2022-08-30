@@ -5,14 +5,21 @@ import { classNames, GlobalContext } from '../context/GlobalState';
 import AllPoolsItem from './AllPoolsItem';
 import PoolListContainer from '../Components/ListContainer';
 import UserPoolsItem from './UserPoolsItem';
+import { MoonLoader } from 'react-spinners';
 
 export default function AllPools() {
-  const {allPools} = useContext(GlobalContext)
+  const { allPools } = useContext(GlobalContext);
   return (
-    <PoolListContainer>
-      {allPools?.map((pool, index) => (
-        <>
-          {/* <Disclosure>
+    <>
+      {allPools.length === 0 ? (
+        <div className="flex mt-24 w-full items-center justify-center">
+          <MoonLoader size={48} speedMultiplier={0.7} />
+        </div>
+      ) : (
+        <PoolListContainer>
+          {allPools?.map((pool, index) => (
+            <>
+              {/* <Disclosure>
             {({ open }) => (
               <>
                 <Disclosure.Button
@@ -22,8 +29,8 @@ export default function AllPools() {
                     'focus-visible:ring-opacity-75'
                   )}
                 > */}
-                  <AllPoolsItem pool={pool} index={index} />
-                {/* </Disclosure.Button>
+              <AllPoolsItem key={'all_pools_' + index} pool={pool} index={index} />
+              {/* </Disclosure.Button>
                 <Disclosure.Panel className="grid grid-cols-1 md:grid-cols-2 py-4 px-12 text-sm text-gray-500">
                   <div>
                     <p>Group</p>
@@ -37,8 +44,10 @@ export default function AllPools() {
               </>
             )}
           </Disclosure> */}
-        </>
-      ))}
-    </PoolListContainer>
+            </>
+          ))}
+        </PoolListContainer>
+      )}
+    </>
   );
 }

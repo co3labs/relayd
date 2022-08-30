@@ -26,11 +26,17 @@ export interface IPolicyItem {
 export interface IPoolItem {
   name: string;
   description: string;
-  balance: string;
+  balance: number;
   tags: string[];
-  enabled: boolean;
-  txCount: number;
-  beneficiaries: { name: string; address: string }[];
+  active: boolean;
+  account: string;
+  created_by: string;
+  created_on: string;
+  id: number;
+  last_modified_on: string;
+  target: string;
+  beneficiaries: string[];
+  _policy: string;
 }
 
 export interface Account {
@@ -67,11 +73,12 @@ export interface globalStates {
   setUserPools: Dispatch<SetStateAction<IPoolItem[]>>;
   allPools: IPoolItem[];
   setAllPools: Dispatch<SetStateAction<IPoolItem[]>>;
-  currentPool: number | null;
-  setCurrentPool: Dispatch<SetStateAction<number | null>>;
+  currentPool: IPoolItem | null;
+  setCurrentPool: Dispatch<SetStateAction<IPoolItem | null>>;
   userPolicies: IPolicyItem[];
   setUserPolicies: Dispatch<SetStateAction<IPolicyItem[]>>;
   allPolicies: IPolicyItem[];
   setAllPolicies: Dispatch<SetStateAction<IPolicyItem[]>>;
   account?: Account;
+  updateUserPools: (current: boolean, id?: number) => Promise<void>;
 }

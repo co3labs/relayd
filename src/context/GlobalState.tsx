@@ -41,74 +41,9 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
   const [modalOpen, setModalOpen] = useState<ModalOpen>(null);
   const [account, setAccount] = useState<Account>();
 
-  const pools: IPoolItem[] = [
-    {
-      name: '1K promotion',
-      description: 'Swaps for over 1K on DataX',
-      balance: '800 LYXt',
-      tags: ['DataX', 'dApp'],
-      enabled: true,
-      txCount: 327,
-      beneficiaries: [
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-      ],
-    },
-    {
-      name: '1st contract deployment',
-      description: 'First Contract deployment using Relayd',
-      balance: '800 LYXt',
-      tags: ['DataX', 'dApp', 'datafi', 'hashmesh'],
-      enabled: true,
-      txCount: 24,
-
-      beneficiaries: [
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-      ],
-    },
-    {
-      name: 'lucky winner promotion',
-      description: '1 in 10 transactions',
-      balance: '800 LYXt',
-      tags: ['DataX', 'hashmesh'],
-      enabled: false,
-      txCount: 131,
-
-      beneficiaries: [
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-      ],
-    },
-
-    {
-      name: 'First five vaults',
-      description: 'First 5 vaults on Guardians',
-      balance: '800 LYXt',
-      tags: ['dApp', 'datafi', 'hashmesh'],
-      enabled: true,
-      txCount: 48,
-
-      beneficiaries: [
-        { name: 'Acct 1', address: '0x01' },
-        { name: 'Acct 1', address: '0x01' },
-      ],
-    },
-  ];
-
-  const [userPools, setUserPools] = useState<IPoolItem[]>(pools);
-  const [allPools, setAllPools] = useState<IPoolItem[]>([...pools, ...pools, ...pools, ...pools]);
-  const [currentPool, setCurrentPool] = useState<number | null>(null);
+  const [userPools, setUserPools] = useState<IPoolItem[]>([]);
+  const [allPools, setAllPools] = useState<IPoolItem[]>([]);
+  const [currentPool, setCurrentPool] = useState<IPoolItem | null>(null);
   // const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
   const strategies: IPolicyItem[] = [
@@ -288,6 +223,22 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
     }
   };
 
+  async function updateUserPools(current: boolean = false, id?: number) {
+    try {
+      const {
+        data: { data },
+      } = await axios.get(API_URL + 'pool/account/' + accountAddress);
+      setUserPools({ ...data });
+
+      if (current) {
+        const currentPoolUpdate = data.find((pool: IPoolItem) => pool.id === id);
+        setCurrentPool({ ...currentPoolUpdate });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     if (chainId !== process.env.CHAIN_ID) {
       switchNetwork();
@@ -337,6 +288,7 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         account,
         accountAddress,
         setAccountAddress,
+        updateUserPools
       }}
     >
       <>{children}</>

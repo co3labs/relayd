@@ -8,11 +8,11 @@ import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index: number }) {
   const { setCurrentPool, userPools, setUserPools } = useContext(GlobalContext);
   return (
-    <li className="w-full" key={pool.name}>
+    <li className="w-full" key={pool.name + '_' + index}>
       <Link
         to={`${pool.name}`}
         onClick={() => {
-          setCurrentPool(index);
+          setCurrentPool(pool);
         }}
         className="block hover:bg-gray-50"
       >
@@ -21,7 +21,7 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
             <p className="text-sm font-medium text-indigo-600 truncate">{pool.name}</p>
             <div className="sm:flex">
               <div className="flex items-center text-sm text-gray-500 mt-2">
-                {pool.tags.map((tag, index) => {
+                {pool.tags?.map((tag, index) => {
                   let color;
 
                   switch (index) {
@@ -43,6 +43,7 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
 
                   return (
                     <span
+                      key={'user_pool_tag_' + index}
                       className={`border ${color} shadow-sm mr-2 text-xs rounded-sm text-gray-800 font-medium px-2 py-1`}
                     >
                       {tag}
@@ -54,9 +55,11 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
           </div>
           <div className="font-medium text-sm text-gray-500 flex flex-col items-center h-full justify-center">
             <div>
-              <p><span className='text-green-600'>{pool.beneficiaries.length}</span> beneficiaries</p>
               <p>
-                <span className='text-green-600'>{pool.txCount}</span> transactions
+                <span className="text-green-600">{pool.beneficiaries.length}</span> beneficiaries
+              </p>
+              <p>
+                <span className="text-green-600">{"pool.txCount"}</span> transactions
               </p>
             </div>
           </div>
@@ -69,10 +72,10 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
             </div>
             <div className="mt-2">
               <Toggle
-                enabled={pool.enabled}
+                enabled={pool.active}
                 onClick={() => {
                   const pools = [...userPools];
-                  const update = { ...pool, enabled: !pool.enabled };
+                  const update = { ...pool, enabled: !pool.active };
                   pools.splice(index, 1, update);
                 }}
               />
