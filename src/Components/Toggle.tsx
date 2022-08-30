@@ -1,7 +1,7 @@
 import { Bars2Icon } from '@heroicons/react/24/outline';
 import { classNames } from '../context/GlobalState';
 
-export default function Toggle({ onClick, enabled }: { onClick: () => any; enabled: boolean }) {
+export default function Toggle({ onClick, enabled }: { onClick: (e:any) => any; enabled: boolean }) {
   return (
     <button id="toggle_active" onClick={onClick} className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
       <div

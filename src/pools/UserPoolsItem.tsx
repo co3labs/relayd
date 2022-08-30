@@ -13,12 +13,9 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
     <li className="w-full" key={pool.name + '_' + index}>
       <div
         onClick={(e) => {
-          //@ts-ignore
-          console.log(e.target);
-          // if (e.target.id !== 'toggle_active') {
-          //   // setCurrentPool(pool);
-          // navigate(`${pool.name}`)
-          // }
+          e.stopPropagation();
+          setCurrentPool(pool);
+          navigate(`${pool.name}`);
         }}
         className="block hover:bg-gray-50 w-full"
       >
@@ -79,7 +76,8 @@ export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index:
             <div className="mt-2">
               <Toggle
                 enabled={active}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   editActiveState(setActive, pool);
                 }}
               />
