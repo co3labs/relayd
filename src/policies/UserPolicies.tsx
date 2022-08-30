@@ -8,10 +8,10 @@ import UserPolicyItem from './UserPolicyItems';
 
 
 export default function UserPolicies() {
-  const {userStrategies} = useContext(GlobalContext)
+  const {userPolicies} = useContext(GlobalContext)
   return (
     <ListContainer>
-      {userStrategies.map((strategy, index) => (
+      {userPolicies.map((strategy, index) => (
         <>
           {/* <Disclosure>
             {({ open }) => (

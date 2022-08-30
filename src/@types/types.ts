@@ -10,16 +10,16 @@ export type VoidFunciton = () => void;
 export type ModalOpen = 'withdraw' | 'recharge' | null;
 
 export type condition = '>' | '<' | '=' | '≥' | '≤' | 'all';
-export interface IStrategyCondition {
+export interface IPolicyCondition {
   param_name: string;
   condition: condition;
   value: string;
 }
-export interface IStrategyItem {
-  name: string;
+export interface IPolicyItem {
+  policy_name: string;
   description: string;
   abi: string;
-  conditions: IStrategyCondition[];
+  conditions: IPolicyCondition[];
   contract_name: string;
 }
 
@@ -69,9 +69,9 @@ export interface globalStates {
   setAllPools: Dispatch<SetStateAction<IPoolItem[]>>;
   currentPool: number | null;
   setCurrentPool: Dispatch<SetStateAction<number | null>>;
-  userStrategies: IStrategyItem[];
-  setUserStrategies: Dispatch<SetStateAction<IStrategyItem[]>>;
-  allStrategies: IStrategyItem[];
-  setAllStrategies: Dispatch<SetStateAction<IStrategyItem[]>>;
+  userPolicies: IPolicyItem[];
+  setUserPolicies: Dispatch<SetStateAction<IPolicyItem[]>>;
+  allPolicies: IPolicyItem[];
+  setAllPolicies: Dispatch<SetStateAction<IPolicyItem[]>>;
   account: Account | undefined
 }

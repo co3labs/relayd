@@ -1,14 +1,14 @@
-import { IStrategyItem } from '../@types/types';
+import { IPolicyItem } from '../@types/types';
 
-export default function UserPolicyItem({ strategy, index }: { strategy: IStrategyItem; index: number }) {
+export default function UserPolicyItem({ strategy, index }: { strategy: IPolicyItem; index: number }) {
   return (
-    <li className="w-full" key={strategy.name}>
+    <li className="w-full" key={strategy.policy_name}>
       <div className="block hover:bg-gray-50">
         <div className="px-4 py-4 sm:px-6">
           <div className="grid grid-cols-2 md:grid-cols-3 items-center justify-between">
             <div className="mt-2 sm:flex sm:justify-between">
               <div className="sm:flex flex-col">
-                <p className="text-sm font-medium text-indigo-600 truncate">{strategy.name}</p>
+                <p className="text-sm font-medium text-indigo-600 truncate">{strategy.policy_name}</p>
                 <p className="flex items-center text-sm text-gray-500 max-w-sm">{strategy.description}</p>
               </div>
             </div>

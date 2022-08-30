@@ -2,7 +2,7 @@ import { createContext, PropsWithChildren, useEffect, useRef, useState } from 'r
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import { Account, globalStates, IPoolItem, IStrategyItem, ModalOpen, supportedChains } from '../@types/types';
+import { Account, globalStates, IPoolItem, IPolicyItem, ModalOpen, supportedChains } from '../@types/types';
 export const blockExplorer = 'https://explorer.execution.l16.lukso.network/address/';
 
 export const INITIAL_GUARDIAN_LIST = { 0: { name: '', address: '' } };
@@ -113,39 +113,39 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
   const [currentPool, setCurrentPool] = useState<number | null>(null);
   // const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
-  const strategies: IStrategyItem[] = [
+  const strategies: IPolicyItem[] = [
     {
       abi: '[a long abi]',
       conditions: [{ param_name: 'amount', condition: '>', value: '' }],
       contract_name: 'KEF1192',
-      name: '1K Transaction',
+      policy_name: '1K Transaction',
       description: 'Incentivizes transactions over 1K in value.',
     },
     {
       abi: '[a long abi]',
       conditions: [{ param_name: 'amount', condition: '>', value: '' }],
       contract_name: 'KEF1192',
-      name: '1K Transaction',
+      policy_name: '1K Transaction',
       description: 'Incentivizes transactions over 1K in value.',
     },
     {
       abi: '[a long abi]',
       conditions: [{ param_name: 'amount', condition: '>', value: '' }],
       contract_name: 'KEF1192',
-      name: '1K Transaction',
+      policy_name: '1K Transaction',
       description: 'Incentivizes transactions over 1K in value.',
     },
     {
       abi: '[a long abi]',
       conditions: [{ param_name: 'amount', condition: '>', value: '' }],
       contract_name: 'KEF1192',
-      name: '1K Transaction',
+      policy_name: '1K Transaction',
       description: 'Incentivizes transactions over 1K in value.',
     },
   ];
 
-  const [userStrategies, setUserStrategies] = useState<IStrategyItem[]>(strategies);
-  const [allStrategies, setAllStrategies] = useState<IStrategyItem[]>([
+  const [userPolicies, setUserPolicies] = useState<IPolicyItem[]>(strategies);
+  const [allPolicies, setAllPolicies] = useState<IPolicyItem[]>([
     ...strategies,
     ...strategies,
     ...strategies,
@@ -312,10 +312,10 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         setCurrentPool,
         setAllPools,
         setUserPools,
-        userStrategies,
-        setUserStrategies,
-        allStrategies,
-        setAllStrategies,
+        userPolicies, 
+        allPolicies,
+        setAllPolicies,
+        setUserPolicies,
         account
       }}
     >

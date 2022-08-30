@@ -1,7 +1,7 @@
-import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
-import { ABIFunc, FuncInput } from '../@types/types';
-import { classNames } from '../context/GlobalState';
+import { ExclamationCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import { useCallback, useContext, useState } from 'react';
+import { ABIFunc, FuncInput, IPolicyItem } from '../@types/types';
+import { classNames, GlobalContext } from '../context/GlobalState';
 import { getFunctionNames, getUsableFunctions, parseABI } from '../util/abi-parse-utils';
 import validator from 'is-my-json-valid';
 
@@ -12,14 +12,17 @@ export default function Createpolicy() {
   const [abi, setAbi] = useState<ABIFunc[]>();
   const [abiInput, setAbiInput] = useState<string>();
   const [invalidAbi, setInvalidAbi] = useState(false);
-
+  const { setUserPolicies, userPolicies } = useContext(GlobalContext);
   return (
     <form
-      action=""
       className="bg-gray-50 p-6 rounded-md mt-4"
       onSubmit={(e) => {
         e.preventDefault();
-        //   onSubmit(e);
+        const formData = new FormData(e.target as HTMLFormElement);
+        const formProps = Object.fromEntries(formData);
+        console.log(formProps);
+        // const params =
+        // setUserPolicies([formProps as IPolicyItem, ...userPolicies]);
       }}
     >
       <div className="rounded-md ">
@@ -32,32 +35,27 @@ export default function Createpolicy() {
             </label>
             <div className="mt-1 relative">
               <input
+                required
                 type="text"
-                name="new-policy-name"
-                id="new-policy-name"
+                name="policy_name"
+                id="policy_name"
                 //   border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500
                 className="block w-full placeholder:text-gray-400 bg-white text-black py-4 pr-10  sm:text-sm rounded-md focus:ring-gray-500 focus:border-gray-500 border border-gray-300"
                 placeholder="1K Incentive"
                 defaultValue=""
                 aria-invalid="true"
-                aria-describedby="email-error"
+                aria-describedby="name-error"
               />
-              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-              </div>
             </div>
-            <p className="mt-2 text-sm text-red-600" id="email-error">
-              Your password must be less than 4 characters.
-            </p>
           </div>
           <div className="flex flex-col">
-            <label htmlFor="about" className="block text-sm font-medium text-black mb-1 pt-2 lg:pt-0">
+            <label htmlFor="description" className="block text-sm font-medium text-black mb-1 pt-2 lg:pt-0">
               Description
             </label>
             <div className="sm:mt-0 sm:col-span-2 w-full">
               <textarea
-                id=""
-                name="deploy_contract_abi"
+                id="description"
+                name="description"
                 rows={0}
                 className="shadow-sm block w-full placeholder:text-gray-400 bg-white text-black  focus:ring-gray-500 focus:border-gray-500 sm:text-sm border border-gray-300 rounded-md"
                 defaultValue={''}
@@ -68,14 +66,15 @@ export default function Createpolicy() {
         </fieldset>
         <fieldset className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
           <div className="flex flex-col">
-            <label htmlFor="about" className="block text-sm font-medium text-black mb-2 ">
+            <label htmlFor="abi" className="block text-sm font-medium text-black mb-2 ">
               Contract ABI
             </label>
             <div className=" sm:mt-0 sm:col-span-2 w-full">
               <textarea
-                id="deploy_contract_abi"
-                name="deploy_contract_abi"
+                id="abi"
+                name="abi"
                 rows={10}
+                required
                 className="shadow-sm block w-full placeholder:text-gray-400 bg-white text-gray-900  focus:ring-gray-500 focus:border-gray-500 sm:text-sm border border-gray-300 rounded-md"
                 defaultValue={''}
                 placeholder="ABI / JSON Inteface"
@@ -101,6 +100,14 @@ export default function Createpolicy() {
                 }}
               />
             </div>
+            {invalidAbi ? (
+              <div className="w-full font-medium flex justify-end text-red-500 items-center">
+                <p>Invalid ABI</p>
+                <XCircleIcon className="w-4 h-4 ml-2" />
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="flex flex-col">
             <p className="mb-1 font-medium ">Policy</p>
@@ -111,6 +118,7 @@ export default function Createpolicy() {
                     Incentive Function
                   </label>
                   <select
+                    required
                     id="functions"
                     name="functions"
                     onChange={(e) => {
@@ -119,7 +127,7 @@ export default function Createpolicy() {
                     }}
                     className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md "
                   >
-                    <option selected={invalidAbi} disabled>
+                    <option selected={invalidAbi} value="" disabled>
                       Select a Function
                     </option>
                     {!abi ? <></> : getFunctionNames(abi).map((name, index) => <option value={index}>{name}</option>)}
@@ -157,7 +165,7 @@ export default function Createpolicy() {
                         return (
                           <div className="px-4 grid grid-cols-3 mt-4">
                             <label
-                              htmlFor={`param-input-${param.name}-${index}`}
+                              htmlFor={`${param.name}-conditional`}
                               className={classNames(
                                 !defineRules ? 'text-gray-200' : ' text-gray-500',
                                 'block text-sm font-medium '
@@ -166,12 +174,12 @@ export default function Createpolicy() {
                               {param.name}
                             </label>
                             <div className="flex items-center">
-                              <label htmlFor="incentive-conditional" className="sr-only">
+                              <label htmlFor={`${param.name}-conditional`} className="sr-only">
                                 incentive conditional
                               </label>
                               <select
-                                id="incentive-conditional"
-                                name="incentive-conditional"
+                                id={`${param.name}-conditional`}
+                                name={`${param.name}-conditional`}
                                 className={classNames(
                                   !defineRules ? 'text-gray-200' : 'text-gray-900',
                                   'focus:ring-indigo-500 focus:border-indigo-500  border-gray-300 h-full p-2 pr-7 mx-4',
@@ -200,42 +208,44 @@ export default function Createpolicy() {
                           </div>
                         );
                       } else if (param.type === 'bool') {
-                        return <div className="px-4 grid grid-cols-3 mt-4">
-                          <label
-                            htmlFor={`param-input-${param.name}-${index}`}
-                            className={classNames(
-                              !defineRules ? 'text-gray-200' : ' text-gray-500',
-                              'block text-sm font-medium'
-                            )}
-                          >
-                            {param.name}
-                          </label>
-                          <div className="mx-4">=</div>
-                          <div className="flex items-center">
-                            <label htmlFor="incentive-conditional" className="sr-only">
-                              incentive conditional
-                            </label>
-                            <select
-                              id="incentive-conditional"
-                              name="incentive-conditional"
+                        return (
+                          <div className="px-4 grid grid-cols-3 mt-4">
+                            <label
+                              htmlFor={`param-input-${param.name}`}
                               className={classNames(
-                                !defineRules ? 'text-gray-200' : 'text-gray-900',
-                                'focus:ring-indigo-500 focus:border-indigo-500  border-gray-300 h-full p-2 pr-7 mx-4',
-                                ' sm:text-sm rounded-md w-16'
+                                !defineRules ? 'text-gray-200' : ' text-gray-500',
+                                'block text-sm font-medium'
                               )}
                             >
-                              <option selected value="true">
-                                true
-                              </option>
-                              <option value="false">false</option>
-                            </select>
+                              {param.name}
+                            </label>
+                            <div className="mx-4">=</div>
+                            <div className="flex items-center">
+                              <label htmlFor={`${param.name}-conditional`} className="sr-only">
+                                incentive conditional
+                              </label>
+                              <select
+                                id={`${param.name}-conditional`}
+                                name={`${param.name}-conditional`}
+                                className={classNames(
+                                  !defineRules ? 'text-gray-200' : 'text-gray-900',
+                                  'focus:ring-indigo-500 focus:border-indigo-500  border-gray-300 h-full p-2 pr-7 mx-4',
+                                  ' sm:text-sm rounded-md w-16'
+                                )}
+                              >
+                                <option selected value="true">
+                                  true
+                                </option>
+                                <option value="false">false</option>
+                              </select>
+                            </div>
                           </div>
-                        </div>;
+                        );
                       } else {
                         return (
                           <div className="px-4 grid grid-cols-3 mt-4">
                             <label
-                              htmlFor={`param-input-${param.name}-${index}`}
+                              htmlFor={`param-input-${param.name}`}
                               className={classNames(
                                 !defineRules ? 'text-gray-200' : ' text-gray-500',
                                 'block text-sm font-medium'
@@ -248,8 +258,8 @@ export default function Createpolicy() {
                               type="text"
                               placeholder="0x0"
                               disabled={!defineRules}
-                              name={`param-input-${param.name}-${index}`}
-                              id={`param-input-${param.name}-${index}`}
+                              name={`param-input-${param.name}`}
+                              id={`param-input-${param.name}`}
                               className={classNames(
                                 !defineRules ? 'border-gray-200 text-gray-200' : ' border-gray-300 ',
                                 'focus:ring-indigo-500 focus:border-indigo-500 block',

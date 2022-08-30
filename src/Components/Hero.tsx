@@ -1,4 +1,4 @@
-import { Fragment, useContext } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import {
   BanknotesIcon,
@@ -9,10 +9,11 @@ import {
   CurrencyDollarIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../context/GlobalState';
 import { CodeBracketIcon } from '@heroicons/react/20/solid';
 export default function Hero() {
+  const { handleConnect, walletAddress } = useContext(GlobalContext);
   const navigation = [
     { name: 'Features', href: '#features' },
     { name: 'Docs', href: '#' },
@@ -41,6 +42,11 @@ export default function Hero() {
       icon: CreditCardIcon,
     },
   ];
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (walletAddress) navigate('login', { replace: true });
+  }, [walletAddress]);
 
   return (
     <div className="min-h-screen">
@@ -81,12 +87,14 @@ export default function Hero() {
                 </div>
               </div>
               <div className="hidden md:flex md:items-center md:space-x-6">
-                <Link
-                  to="login"
+                <button
+                  onClick={() => {
+                    handleConnect();
+                  }}
                   className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-gray-700 hover:text-gray-900 border-indigo-600 hover:bg-indigo-100"
                 >
-                  Log in
-                </Link>
+                  Connect Wallet
+                </button>
               </div>
             </nav>
           </div>
@@ -134,12 +142,14 @@ export default function Hero() {
                     ))}
                   </div>
                   <div className="mt-6 px-5">
-                    <Link
+                    <button
                       className="block text-center w-full py-3 px-4 rounded-md shadow bg-indigo-600 text-white font-medium hover:bg-indigo-700"
-                      to={'login'}
+                      onClick={() => {
+                        handleConnect();
+                      }}
                     >
                       Get Started
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -163,12 +173,14 @@ export default function Hero() {
                     <div className="mt-10 sm:mt-12">
                       <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                         <div className="rounded-md shadow">
-                          <Link
-                            to="login"
+                          <button
+                            onClick={() => {
+                              handleConnect();
+                            }}
                             className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-16"
                           >
-                            Get Started
-                          </Link>
+                            Connect Wallet
+                          </button>
                         </div>
                       </div>
                     </div>
