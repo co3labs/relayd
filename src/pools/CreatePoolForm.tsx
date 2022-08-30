@@ -1,9 +1,12 @@
-import { TrashIcon, XCircleIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
-import { classNames } from '../context/GlobalState';
+import { GlobeAltIcon, TrashIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { API_URL, classNames, GlobalContext } from '../context/GlobalState';
+import axios from 'axios';
 export default function CreatePoolForm() {
-  const strategies = ['No Strategy', 'Strategy A', 'Strategy B', 'Strategy C'];
+  const strategies = ['No Policy', 'Strategy A', 'Strategy B', 'Strategy C'];
   const [selectedStrategy, setSelectedStrategy] = useState(strategies[0]);
+  const { walletAddress, accountAddress } = useContext(GlobalContext);
 
   interface INewPoolInfo {
     name: string;
@@ -35,13 +38,37 @@ export default function CreatePoolForm() {
   );
 
   const RedAstrisq = () => <span className="text-red-400 ml-[2px]">*</span>;
+
+  const navigate = useNavigate();
+  async function handleSubmit(e: any) {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const formProps = Object.fromEntries(formData);
+    const { name, description, beneficiares, luksoAmount, target, policy } = formProps;
+    console.log('Create new pool form data:', formProps);
+    try {
+      await axios.post(API_URL + 'pool', {
+        name,
+        description,
+        beneficiares,
+        target,
+        policy,
+        creator: walletAddress,
+        accountAddress,
+      });
+
+      alert("Pool Succesfully Created")
+    } catch (error) {
+      console.error(error)
+    }
+
+  }
+
   return (
     <>
       <form
         action=""
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
+        onSubmit={(e) => handleSubmit(e as any)}
         className="space-y-8 divide-y divide-gray-200 my-6 bg-gray-50 p-4 rounded-lg max-w-5xl mx-auto"
       >
         <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
@@ -55,15 +82,15 @@ export default function CreatePoolForm() {
 
             <div className="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label htmlFor="pool-name" className="block text-sm font-medium text-gray-800  sm:pt-2 ">
+                <label htmlFor="poolName" className="block text-sm font-medium text-gray-800  sm:pt-2 ">
                   Name <RedAstrisq />
                 </label>
                 <div className="mt-1 sm:mt-0 sm:col-span-2 max-w-sm xl:col-span-1 rounded-md shadow-sm ">
                   {' '}
                   <input
                     type="text"
-                    name="pool-name"
-                    id="poo-name"
+                    name="poolName"
+                    id="poolName"
                     autoComplete="none"
                     placeholder="my new pool"
                     required
@@ -93,13 +120,13 @@ export default function CreatePoolForm() {
 
               <div className="lg:grid lg:grid-cols-3 lg:gap-4 lg:items-start lg:border-t lg:border-gray-200 lg:pt-5">
                 <LableWDesc
-                  name="strategy"
+                  name="policy"
                   description="This is the strategy defining incentivized transactions. The strategy must conform with the contract ABI."
                 />
                 <div className="mt-1">
                   <select
-                    id="strategy"
-                    name="strategy"
+                    id="policy"
+                    name="policy"
                     className={classNames(
                       'shadow-sm text-gray-800 focus:ring-gray-500 focus:border-gray-500 block w-full sm:text-sm border-gray-300 rounded-md '
                     )}
@@ -112,15 +139,15 @@ export default function CreatePoolForm() {
               </div>
 
               <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label htmlFor="recharge-lukso-amt" className="text-sm font-medium text-gray-800  sm:pt-2 ">
+                <label htmlFor="depositAmount" className="text-sm font-medium text-gray-800  sm:pt-2 ">
                   Amount
                 </label>
                 <div>
                   <div className="relative rounded-md shadow-sm mt-1 sm:mt-0 sm:col-span-2 max-w-sm xl:col-span-1">
                     <input
                       type="text"
-                      name="deposit-lukso-amt"
-                      id="deposit-lukso-amt"
+                      name="depositAmount"
+                      id="depositAmountt"
                       className="text-gray-800 placeholder:text-gray-300 py-2 focus:ring-gray-500 focus:border-gray-500 relative block w-full rounded-md focus:z-10 sm:text-sm border-gray-300"
                       placeholder="0.00"
                       aria-describedby="price-currency"
@@ -131,21 +158,22 @@ export default function CreatePoolForm() {
                       </span>
                     </div>
                   </div>
-                  <div className='flex w-full justify-end text-xs pr-1 text-gray-400'>Max: 467 LXYt</div>
+                  <div className="flex w-full justify-end text-xs pr-1 text-gray-400">Max: 467 LXYt</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
-          <label htmlFor="new-pool-description" className="block text-sm font-medium text-gray-800 sm:pt-2 ">
-            Description
+          <label htmlFor="description" className="block text-sm font-medium text-gray-800 sm:pt-2 ">
+            Description <RedAstrisq />
           </label>
           <div className="mt-1 sm:mt-0 sm:col-span-2 max-w-md rounded-md shadow-sm ">
             <textarea
-              id="new-pool-description"
-              name="new-pool-description"
+              id="description"
+              name="description"
               rows={3}
+              required
               className="shadow-sm block w-full  text-gray-800  focus:ring-gray-500 focus:border-gray-500 sm:text-sm border border-gray-300 rounded-md"
               defaultValue={''}
               placeholder=""
