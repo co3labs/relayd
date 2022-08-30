@@ -1,10 +1,20 @@
 import { ArrowTopRightOnSquareIcon, Bars2Icon } from '@heroicons/react/24/outline';
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IPoolItem } from '../@types/types';
+import { IPoolItem, ITxTotals } from '../@types/types';
 import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 
-export default function AllPoolsItem({ pool, index }: { pool: IPoolItem; index: number }) {
+export default function AllPoolsItem({
+  pool,
+  index,
+  loadingTotals,
+  totals
+}: {
+  pool: IPoolItem;
+  index: number;
+  loadingTotals: boolean;
+  totals: ITxTotals[]
+}) {
   const { setCurrentPool } = useContext(GlobalContext);
 
   return (
@@ -58,7 +68,7 @@ export default function AllPoolsItem({ pool, index }: { pool: IPoolItem; index: 
                 <span className="text-green-600">{pool.beneficiaries.length}</span> beneficiaries
               </p>
               <p>
-                <span className="text-green-600">{"pool.txCount"}</span> transactions
+                <span className="text-green-600">{'pool.txCount'}</span> transactions
               </p>
             </div>
           </div>

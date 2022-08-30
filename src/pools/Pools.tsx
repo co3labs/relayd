@@ -14,6 +14,8 @@ export default function Pools() {
     useContext(GlobalContext);
   const tabs = ['My Pools', 'All Pools', 'Create a New Pool'];
   const [tab, setTab] = useState(0);
+  const [txTotals, setTxTotals] = useState([]);
+  const [loadingTotals, setLoadingTotals] = useState(false);
 
   async function getAllPools() {
     const {
@@ -27,7 +29,7 @@ export default function Pools() {
       sum += item.balance;
     });
 
-    setAccount({ ...account,  allocated: account.unallocated - sum });
+    setAccount({ ...account, allocated: account.unallocated - sum });
   }
 
   async function getUserPools() {
@@ -41,10 +43,26 @@ export default function Pools() {
     try {
       if (tab === 1 && allPools.length === 0) getAllPools();
       if (tab === 0 && userPools.length === 0) getUserPools();
+      if (allPools.length === 0) getAllPools();
     } catch (error) {
       console.error(error);
     }
   }, [tab]);
+
+  useEffect(() => {
+    if (allPools.length > 0 && txTotals.length == 0) {
+      setLoadingTotals(true);
+      axios
+        .get(API_URL + 'transaction/pool/count')
+        .then(({ data: { data } }) => {
+          setTxTotals(data);
+        })
+        .catch(console.error)
+        .finally(() => {
+          setLoadingTotals(false);
+        });
+    }
+  }, []);
 
   return (
     <>
@@ -78,10 +96,10 @@ export default function Pools() {
           <div className="overflow-scroll flex-grow max-h-full  no-scrollbar">
             <Tab.Panels>
               <Tab.Panel>
-                <UserPools />
+                <UserPools totals={txTotals} loadingTotals={loadingTotals} />
               </Tab.Panel>
               <Tab.Panel>
-                <AllPools />
+                <AllPools totals={txTotals}  loadingTotals={loadingTotals} />
               </Tab.Panel>
               <Tab.Panel>
                 <CreatePoolForm setTab={setTab} />

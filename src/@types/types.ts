@@ -50,6 +50,11 @@ export interface IPoolItem {
   _policy: IPolicyItem;
 }
 
+export interface ITxTotals {
+  pool: number;
+  count: string;
+}
+
 export interface IPoolTx {
   id: string;
   amount: number;

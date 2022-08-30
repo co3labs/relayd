@@ -310,13 +310,14 @@ export default function Pool() {
                   </Tab.Panel>
                   <Tab.Panel>
                     <form>
-                      <label htmlFor="withdraw" className="sr-only">
+                      <label htmlFor="withdraw" onSubmit={handleBalanceChange} className="sr-only">
                         Amount to withdraw
                       </label>
                       <div>
                         <div className="mt-1 relative rounded-md shadow-sm">
                           <input
                             type="number"
+                            step="0.01"
                             name="withdraw"
                             id="withdraw"
                             className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-2 pr-12 sm:text-sm border-gray-300 rounded-md"

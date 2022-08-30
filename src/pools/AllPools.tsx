@@ -1,13 +1,13 @@
 import { Disclosure } from '@headlessui/react';
 import { useContext } from 'react';
-import { IPoolItem } from '../@types/types';
+import { IPoolItem, ITxTotals } from '../@types/types';
 import { classNames, GlobalContext } from '../context/GlobalState';
 import AllPoolsItem from './AllPoolsItem';
 import PoolListContainer from '../Components/ListContainer';
 import UserPoolsItem from './UserPoolsItem';
 import { MoonLoader } from 'react-spinners';
 
-export default function AllPools() {
+export default function AllPools({ loadingTotals, totals }: { loadingTotals: boolean; totals: ITxTotals[] }) {
   const { allPools } = useContext(GlobalContext);
   return (
     <>
@@ -29,7 +29,13 @@ export default function AllPools() {
                     'focus-visible:ring-opacity-75'
                   )}
                 > */}
-              <AllPoolsItem key={'all_pools_' + index} pool={pool} index={index} />
+              <AllPoolsItem
+                loadingTotals={loadingTotals}
+                totals={totals}
+                key={'all_pools_' + index}
+                pool={pool}
+                index={index}
+              />
               {/* </Disclosure.Button>
                 <Disclosure.Panel className="grid grid-cols-1 md:grid-cols-2 py-4 px-12 text-sm text-gray-500">
                   <div>

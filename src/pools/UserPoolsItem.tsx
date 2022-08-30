@@ -1,11 +1,21 @@
 import { ArrowTopRightOnSquareIcon, Bars2Icon } from '@heroicons/react/24/outline';
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { IPoolItem } from '../@types/types';
+import { IPoolItem, ITxTotals } from '../@types/types';
 import Toggle from '../Components/Toggle';
 import { classNames, getShortId, GlobalContext } from '../context/GlobalState';
 
-export default function UserPoolsItem({ pool, index }: { pool: IPoolItem; index: number }) {
+export default function UserPoolsItem({
+  pool,
+  index,
+  loadingTotals,
+  totals,
+}: {
+  pool: IPoolItem;
+  index: number;
+  loadingTotals: boolean;
+  totals: ITxTotals[];
+}) {
   const { setCurrentPool, userPools, setUserPools, editActiveState } = useContext(GlobalContext);
   const [active, setActive] = useState(pool.active);
   const navigate = useNavigate();
