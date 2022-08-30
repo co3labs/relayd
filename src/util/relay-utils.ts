@@ -38,7 +38,7 @@ async function generateRelayPayload(account: string, params: object) {
 
     let abiPayload = await encodePayload(account, params);
     const signature = await signPayload(controllerAccount, nonce, KeyManager.options.address, abiPayload);
-    return { account, abiPayload, signature, nonce };
+    return { account, abiPayload, signature, nonce, controller: controllerAccount.address };
 }
 
 /**

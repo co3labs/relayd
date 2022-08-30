@@ -25,7 +25,6 @@ export async function createUP(controller: string) {
     const contracts = await lspFactory.UniversalProfile.deploy(
         {
             controllerAddresses: [controller, REACT_APP_RELAYD_CONTROLLER as string],
-
         },
         {
             LSP0ERC725Account: {
@@ -55,6 +54,5 @@ export async function createUP(controller: string) {
     console.log("::::::::: CONTRACTS ::::::::")
     console.log(contracts)
     return contracts
-
 }
 
