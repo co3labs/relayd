@@ -1,9 +1,50 @@
 import { ArrowRightCircleIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import FocusModalContainer from '../modals/FocusModalContainer';
-
+import axios from 'axios';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { API_URL, classNames, GlobalContext } from '../context/GlobalState';
+import { MoonLoader } from 'react-spinners';
 export default function Login() {
   const navigate = useNavigate();
+  const { walletAddress, web3 } = useContext(GlobalContext);
+  const [error, setError] = useState<any | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [up, setUp] = useState('');
+  const [canLogin, setCanLogin] = useState(false);
+
+  const checkCanLogin = async () => {
+    console.log('checking login');
+    try {
+      const body = {
+        account: up,
+        signer: walletAddress,
+      };
+      setLoading(true);
+      console.log(body);
+      const userHasPermissions = await axios.post(API_URL + 'account/verifySigner', body);
+
+      if (userHasPermissions) {
+        const accountExists = await axios.get(API_URL + 'account/' + up);
+        if (!accountExists) await axios.post(API_URL + 'account/', body);
+        setCanLogin(true);
+      }
+    } catch (error) {
+      console.error(error);
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    console.log('asldkjfasdf', web3?.utils.isAddress(up));
+    if (web3?.utils.isAddress(up)) {
+      console.log('564654');
+
+      checkCanLogin();
+    }
+  }, [up]);
+
   return (
     <div className="bg-white w-full h-full">
       <FocusModalContainer>
@@ -21,20 +62,35 @@ export default function Login() {
               </h2>
             </div>
 
-            <form className="space-y-6" action="#" method="POST" onSubmit={() => navigate('/account/pools')}>
+            <form
+              className="space-y-6"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                if (canLogin) navigate('/account/pools', { replace: true });
+              }}
+            >
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                <label htmlFor="upAddress" className="block text-sm font-medium text-gray-900">
                   Universal Profile Address
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 flex items-center">
                   <input
-                    id="up-address"
-                    name="up-address"
+                    id="upAddress"
+                    name="upAddress"
                     type="text"
                     placeholder="0x0"
-                    // required
-                    className="appearance-none block w-full px-3 py-2 border bg-transparent text-white border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    value={up}
+                    onChange={(e) => setUp(e.target.value)}
+                    required
+                    className="appearance-none block w-full px-3 py-2 border bg-transparent text-gray-800 border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
+                  {loading ? (
+                    <div className="flex ml-2">
+                      <MoonLoader size={16} />
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
 
@@ -55,7 +111,14 @@ export default function Login() {
               <div>
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className={classNames(
+                    canLogin
+                      ? 'bg-indigo-600 first-letter:hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                      : 'bg-gray-300 cursor-not-allowed',
+                    'w-full flex items-center justify-center py-2 px-4 border border-transparent',
+                    ' rounded-md shadow-sm text-sm font-medium text-white ',
+                    ' '
+                  )}
                 >
                   <span>Go to dashboard </span> <ArrowRightCircleIcon className="w-4 ml-1" />
                 </button>

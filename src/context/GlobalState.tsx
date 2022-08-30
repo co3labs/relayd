@@ -6,7 +6,7 @@ import { Account, globalStates, IPoolItem, IPolicyItem, ModalOpen, supportedChai
 export const blockExplorer = 'https://explorer.execution.l16.lukso.network/address/';
 
 export const INITIAL_GUARDIAN_LIST = { 0: { name: '', address: '' } };
-
+export const API_URL = "https://relayd-api.vercel.app/api/v1/"
 export const networks = {
   2828: 'Lukso Testnet (L16)',
   4: 'Rinkeby',
