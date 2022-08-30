@@ -35,11 +35,9 @@ export interface IPoolItem {
 
 export interface Account {
   address: string;
-  name: string;
-  description: string;
-  balance:number
+  unallocated: number;
+  allocated: number;
 }
-
 
 export interface FuncInput {
   internalType: string;
@@ -61,6 +59,8 @@ export interface globalStates {
   chainId?: supportedChains;
   provider?: Web3Modal;
   web3?: Web3;
+  accountAddress?: string;
+  setAccountAddress: Dispatch<SetStateAction<string | undefined>>;
   modalOpen: ModalOpen;
   setModalOpen: Dispatch<SetStateAction<ModalOpen>>;
   userPools: IPoolItem[];
@@ -73,5 +73,5 @@ export interface globalStates {
   setUserPolicies: Dispatch<SetStateAction<IPolicyItem[]>>;
   allPolicies: IPolicyItem[];
   setAllPolicies: Dispatch<SetStateAction<IPolicyItem[]>>;
-  account: Account | undefined
+  account?: Account;
 }

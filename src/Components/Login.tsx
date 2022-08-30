@@ -7,14 +7,13 @@ import { API_URL, classNames, GlobalContext } from '../context/GlobalState';
 import { MoonLoader } from 'react-spinners';
 export default function Login() {
   const navigate = useNavigate();
-  const { walletAddress, web3 } = useContext(GlobalContext);
+  const { walletAddress, web3, setAccountAddress } = useContext(GlobalContext);
   const [error, setError] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
   const [up, setUp] = useState('');
   const [canLogin, setCanLogin] = useState(false);
 
   const checkCanLogin = async () => {
-    console.log('checking login');
     try {
       const body = {
         account: up,
@@ -27,6 +26,7 @@ export default function Login() {
       if (userHasPermissions) {
         const accountExists = await axios.get(API_URL + 'account/' + up);
         if (!accountExists) await axios.post(API_URL + 'account/', body);
+        setAccountAddress(up);
         setCanLogin(true);
       }
     } catch (error) {
@@ -37,10 +37,7 @@ export default function Login() {
     }
   };
   useEffect(() => {
-    console.log('asldkjfasdf', web3?.utils.isAddress(up));
     if (web3?.utils.isAddress(up)) {
-      console.log('564654');
-
       checkCanLogin();
     }
   }, [up]);

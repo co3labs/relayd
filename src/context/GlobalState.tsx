@@ -3,10 +3,12 @@ import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { Account, globalStates, IPoolItem, IPolicyItem, ModalOpen, supportedChains } from '../@types/types';
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 export const blockExplorer = 'https://explorer.execution.l16.lukso.network/address/';
 
 export const INITIAL_GUARDIAN_LIST = { 0: { name: '', address: '' } };
-export const API_URL = "https://relayd-api.vercel.app/api/v1/"
+export const API_URL = 'https://relayd-api.vercel.app/api/v1/';
 export const networks = {
   2828: 'Lukso Testnet (L16)',
   4: 'Rinkeby',
@@ -31,17 +33,13 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
   // essential states for connection to web3, user wallet, ocean operations, and DataX configurations
   const [web3Modal, setWeb3Modal] = useState<Web3Modal>();
   const [walletAddress, setWalletAddress] = useState<string>();
+  const [accountAddress, setAccountAddress] = useState<string>();
   const [chainId, setChainId] = useState<any>();
   const [provider, setProvider] = useState<Web3Modal>();
   const [web3, setWeb3] = useState<Web3>();
   const [unsupportedNet, setUnsupportedNet] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<ModalOpen>(null);
-  const [account, setAccount] = useState<Account | undefined>({
-    address: '0xD3d24669912914720d97AC7fD95a5E74858ae7fB',
-    name: 'Hashmesh Universal Profile',
-    description: 'Universal Profile for Hashmesh assets.',
-    balance: 467,
-  });
+  const [account, setAccount] = useState<Account>();
 
   const pools: IPoolItem[] = [
     {
@@ -296,6 +294,26 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
     }
   }, [chainId]);
 
+  useEffect(() => {
+    console.log('Getting account data:', accountAddress && !account);
+    if (accountAddress && !account) {
+      // const {data} useQuery
+      axios
+        .get(API_URL + 'account/' + accountAddress)
+        .then((res) => {
+          console.log(res);
+          const data = res.data.data;
+          setAccount(data);
+          return data;
+        })
+        .then(async (data) => {
+          const balance = await web3?.eth.getBalance(data.wallet);
+          console.log('Account balance: ', balance);
+          setAccount({ ...data, unallocated: balance });
+        });
+    }
+  }, [accountAddress]);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -312,11 +330,13 @@ export const GlobalProvider = ({ children }: { children: PropsWithChildren<{}> }
         setCurrentPool,
         setAllPools,
         setUserPools,
-        userPolicies, 
+        userPolicies,
         allPolicies,
         setAllPolicies,
         setUserPolicies,
-        account
+        account,
+        accountAddress,
+        setAccountAddress,
       }}
     >
       <>{children}</>
